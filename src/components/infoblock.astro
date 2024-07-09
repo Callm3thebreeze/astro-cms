@@ -20,7 +20,7 @@ const { content } = Astro.props;
     {
       content.links && content.links.length > 0 && (
         <div class="mt-6 flex flex-col sm:flex-row gap-3">
-          {content.links.map((link) => (
+          {content.links.map((link: any) => (
             <Link
               href={link.href}
               size="lg"

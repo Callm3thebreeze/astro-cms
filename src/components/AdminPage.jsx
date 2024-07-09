@@ -26,6 +26,17 @@ const AdminPage = () => {
     Right: "py-6 order-first md:order-1 md:flex",
   };
 
+  const buttonStyles = {
+    outline: "outline",
+    primary: "primary",
+    inverted: "inverted",
+    muted: "muted",
+  };
+  const iconStyles = {
+    white: "text-white w-5 h-5",
+    black: "text-black w-5 h-5",
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setForm((prevForm) => ({ ...prevForm, [name]: value }));
@@ -167,7 +178,7 @@ const AdminPage = () => {
                 <label
                   htmlFor="class"
                   className="block text-sm font-medium text-gray-700">
-                  Psición
+                  Posición
                 </label>
                 <select
                   name="picClass"
@@ -229,6 +240,21 @@ const AdminPage = () => {
                 className="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0 mb-4">
                 <div>
                   <label
+                    htmlFor={`linkText-${index}`}
+                    className="block text-sm font-medium text-gray-700">
+                    Texto
+                  </label>
+                  <input
+                    type="text"
+                    name="text"
+                    id={`linkText-${index}`}
+                    value={link.text}
+                    onChange={(e) => handleLinkChange(e, index)}
+                    className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                  />
+                </div>
+                <div>
+                  <label
                     htmlFor={`linkHref-${index}`}
                     className="block text-sm font-medium text-gray-700">
                     Href
@@ -248,14 +274,20 @@ const AdminPage = () => {
                     className="block text-sm font-medium text-gray-700">
                     Estilo
                   </label>
-                  <input
-                    type="text"
-                    name="style"
+                  <select
+                    name="buttonStyle"
                     id={`linkStyle-${index}`}
-                    value={link.style}
-                    onChange={(e) => handleLinkChange(e, index)}
-                    className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                  />
+                    value={Object.keys(buttonStyles).find(
+                      (key) => buttonStyles[key] === form.image.picClass,
+                    )}
+                    onChange={handleLinkChange}
+                    className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                    {Object.keys(buttonStyles).map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div>
                   <label
@@ -272,35 +304,27 @@ const AdminPage = () => {
                     className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
                 </div>
+
                 <div>
                   <label
                     htmlFor={`linkIconClass-${index}`}
                     className="block text-sm font-medium text-gray-700">
-                    Clase del icono
+                    Color del icono
                   </label>
-                  <input
-                    type="text"
-                    name="icon.class"
+                  <select
+                    name="iconStyle"
                     id={`linkIconClass-${index}`}
-                    value={link.icon.class}
-                    onChange={(e) => handleLinkChange(e, index)}
-                    className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor={`linkText-${index}`}
-                    className="block text-sm font-medium text-gray-700">
-                    Texto
-                  </label>
-                  <input
-                    type="text"
-                    name="text"
-                    id={`linkText-${index}`}
-                    value={link.text}
-                    onChange={(e) => handleLinkChange(e, index)}
-                    className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                  />
+                    value={Object.keys(iconStyles).find(
+                      (key) => iconStyles[key] === form.image.picClass,
+                    )}
+                    onChange={handleLinkChange}
+                    className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                    {Object.keys(iconStyles).map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
             ))}

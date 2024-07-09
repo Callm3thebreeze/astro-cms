@@ -36,7 +36,7 @@ export const head = {
       style: "outline",
       icon: {
         name: "bx:bxl-github",
-        class: "text-black w-4 h-4",
+        class: "text-black w-5 h-5",
       },
       text: "GitHub Repo 1",
       size: "lg",
