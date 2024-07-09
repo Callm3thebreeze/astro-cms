@@ -21,6 +21,11 @@ const AdminPage = () => {
     Transition: "transition-all duration-500",
   };
 
+  const imagePositionOptions = {
+    Left: "py-6 md:order-first md:flex",
+    Right: "py-6 order-first md:order-1 md:flex",
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setForm((prevForm) => ({ ...prevForm, [name]: value }));
@@ -152,6 +157,27 @@ const AdminPage = () => {
                   onChange={handleImageClassChange}
                   className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                   {Object.keys(imageClassOptions).map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label
+                  htmlFor="class"
+                  className="block text-sm font-medium text-gray-700">
+                  Psición
+                </label>
+                <select
+                  name="picClass"
+                  id="picClass"
+                  value={Object.keys(imageClassOptions).find(
+                    (key) => imagePositionOptions[key] === form.image.picClass,
+                  )}
+                  onChange={handleImageClassChange}
+                  className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                  {Object.keys(imagePositionOptions).map((option) => (
                     <option key={option} value={option}>
                       {option}
                     </option>
