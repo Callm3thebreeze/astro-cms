@@ -7,8 +7,7 @@ const { content } = Astro.props;
 ---
 
 <main
-  class="grid lg:grid-cols-2 place-items-center pt-16 pb-12 md:pt-12 md:pb-24 gap-5"
->
+  class="grid lg:grid-cols-2 place-items-center pt-16 pb-12 md:pt-12 md:pb-24 gap-5">
   <div>
     {content.title && <h1 class={content.titleClass}>{content.title}</h1>}
     {
@@ -28,8 +27,7 @@ const { content } = Astro.props;
               style={link.style}
               rel="noopener"
               class="flex gap-1 items-center justify-center"
-              target="_blank"
-            >
+              target="_blank">
               <Icon class={link.icon.class} name={link.icon.name} />
               {link.text}
             </Link>
