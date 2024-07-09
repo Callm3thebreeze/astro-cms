@@ -2,7 +2,6 @@ import profileImage from "assets/profile-pic.jpeg";
 import skateImage from "assets/skate.jpg";
 import pokemonImage from "assets/pokemon.jpg";
 
-
 export const head = {
   image: {
     class: "py-6 order-first md:order-1 md:flex",
