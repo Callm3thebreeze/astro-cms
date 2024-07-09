@@ -1,4 +1,5 @@
 ---
+import Container from "@components/container.astro";
 import Features from "@components/features.astro";
 import Layout from "../layouts/Layout.astro";
 import Infoblock from "@components/infoblock.astro";
@@ -6,10 +7,10 @@ import { head, block1, block2 } from "@content/content.js";
 ---
 
 <Layout title="Astro CMS">
-  <main>
+  <Container>
     <Infoblock content={head} />
     <Features />
     <Infoblock content={block1} />
     <Infoblock content={block2} />
-  </main>
+  </Container>
 </Layout>

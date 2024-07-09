@@ -7,5 +7,6 @@ import "dotenv/config";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://www.linkedin.com/in/jesusvillarjimenez/",
   integrations: [tailwind(), icon(), mdx(), sitemap()],
 });
