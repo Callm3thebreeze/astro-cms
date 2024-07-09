@@ -16,9 +16,10 @@ const AdminPage = () => {
   });
 
   const imageClassOptions = {
-    "Black & White": "filter grayscale hover:grayscale-0",
-    Color: "filter",
-    Transition: "transition-all duration-500",
+    "Black & White": "filter grayscale",
+    Color: "flex justify-center w-full",
+    Transition:
+      "transition-all duration-500 filter grayscale hover:grayscale-0 flex justify-center w-full",
   };
 
   const imagePositionOptions = {
@@ -102,6 +103,13 @@ const AdminPage = () => {
   const handleEdit = (index) => {
     setForm(blocks[index]);
     handleDelete(index);
+  };
+
+  const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + "...";
+    }
+    return text;
   };
 
   return (
@@ -351,31 +359,33 @@ const AdminPage = () => {
           <div
             key={index}
             className="mb-6 p-4 border border-gray-200 rounded-md shadow-sm">
-            <div className="infoblock">
-              {block.image && (
+            <div className="infoblock flex justify-between items-start gap-2">
+              <div>
+                <h2>{block.title}</h2>
+                <p>{truncateText(block.description, 60)}</p>
+                {block.links && block.links.length > 0 && (
+                  <ul>
+                    {block.links.map((link, linkIndex) => (
+                      <li key={linkIndex}>
+                        <a href={link.href} className={link.style}>
+                          {link.icon && (
+                            <i className={link.icon.class}>{link.icon.name}</i>
+                          )}
+                          {link.text}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              {block.image.src && (
                 <div className={block.image.class}>
                   <img
-                    className={block.image.picClass}
+                    className={`${block.image.picClass} max-w-[150px]`}
                     src={block.image.src}
                     alt={block.image.alt}
                   />
                 </div>
-              )}
-              <h2>{block.title}</h2>
-              <p>{block.description}</p>
-              {block.links && block.links.length > 0 && (
-                <ul>
-                  {block.links.map((link, linkIndex) => (
-                    <li key={linkIndex}>
-                      <a href={link.href} className={link.style}>
-                        {link.icon && (
-                          <i className={link.icon.class}>{link.icon.name}</i>
-                        )}
-                        {link.text}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
               )}
             </div>
             <button
