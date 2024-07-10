@@ -90,7 +90,7 @@ export const features = {
 
 export const block1 = {
   image: {
-    class: "py-6 md:order-first md:flex",
+    class: "md:order-first md:flex",
     picClass: "flex justify-center w-full",
     src: pokemonImage,
     alt: "Profile Picture",
@@ -104,7 +104,7 @@ export const block1 = {
 
 export const block2 = {
   image: {
-    class: "py-6 md:order-1 md:flex",
+    class: "md:order-1 md:flex",
     picClass: "flex justify-center w-full",
     src: skateImage,
     alt: "Profile Picture",

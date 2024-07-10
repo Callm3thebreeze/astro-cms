@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Form from "./Form";
 import BlockList from "./BlockList";
 import {
@@ -22,7 +22,7 @@ const AdminPage = () => {
       picClass: "",
       src: "",
       alt: "",
-      widths: [200, 400, 460], // Establecer el valor directamente
+      widths: [200, 400, 460],
     },
     links: [],
   });
@@ -33,7 +33,8 @@ const AdminPage = () => {
 
   return (
     <main className="container mx-auto py-8">
-      <h1 className="text-2xl font-bold mb-6">Panel de Control</h1>
+      <h1 className="text-3xl font-bold mb-6">Panel de Control</h1>
+      <h2 className="text-xl mb-2"> Módulo básico</h2>
       <Form
         form={form}
         setForm={setForm}
