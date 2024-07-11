@@ -1,25 +1,31 @@
 import React from "react";
+import { VscNoNewline } from "react-icons/vsc";
 
 const Form = ({
   form,
   setForm,
   handleInputChange,
-  handleImageChange,
-  handleImageClassChange,
-  handleAddLink,
-  handleLinkChange,
   handleSave,
+  showLink1,
+  showLink2,
+  setShowLink1,
+  setShowLink2,
 }) => {
   const imageClassOptions = {
-    "Black & White": "filter grayscale",
     Color: "flex justify-center w-full",
+    "Black & White": "filter grayscale",
     Transition:
       "transition-all duration-500 filter grayscale hover:grayscale-0 flex justify-center w-full",
   };
 
+  const imagePositionOptions = {
+    right: "md:order-1 md:flex",
+    left: "md:order-first md:flex",
+  };
+
   const buttonStyles = {
-    outline: "outline",
     primary: "primary",
+    outline: "outline",
     inverted: "inverted",
     muted: "muted",
   };
@@ -31,6 +37,7 @@ const Form = ({
 
   return (
     <form
+      method="POST"
       className="space-y-4 md:space-y-0 md:grid md:grid-cols-2 md:gap-4"
       onSubmit={handleSave}>
       <div className="md:col-span-1 bg-gray-100 rounded-md p-4">
@@ -53,14 +60,14 @@ const Form = ({
           </div>
           <div>
             <label
-              htmlFor="description"
+              htmlFor="content"
               className="block text-sm font-medium text-gray-700">
               Descripción
             </label>
             <textarea
-              name="description"
-              id="description"
-              value={form.description}
+              name="content"
+              id="content"
+              value={form.content}
               onChange={(e) => handleInputChange(e, setForm)}
               className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
             />
@@ -75,22 +82,18 @@ const Form = ({
           <div className="space-y-4">
             <div>
               <label
-                htmlFor="class"
+                htmlFor="imageStyle"
                 className="block text-sm font-medium text-gray-700">
                 Clase de imagen
               </label>
               <select
-                name="picClass"
-                id="picClass"
-                value={Object.keys(imageClassOptions).find(
-                  (key) => imageClassOptions[key] === form.image.picClass,
-                )}
-                onChange={(e) =>
-                  handleImageClassChange(e, setForm, imageClassOptions)
-                }
+                name="imageStyle"
+                id="imageStyle"
+                value={form.imageStyle}
+                onChange={(e) => handleInputChange(e, setForm)}
                 className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                 {Object.keys(imageClassOptions).map((option) => (
-                  <option key={option} value={option}>
+                  <option key={option} value={imageClassOptions[option]}>
                     {option}
                   </option>
                 ))}
@@ -98,31 +101,50 @@ const Form = ({
             </div>
             <div>
               <label
-                htmlFor="src"
+                htmlFor="imagePosition"
+                className="block text-sm font-medium text-gray-700">
+                Posición de imagen
+              </label>
+              <select
+                name="imagePosition"
+                id="imagePosition"
+                value={form.imagePosition}
+                onChange={(e) => handleInputChange(e, setForm)}
+                className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                {Object.keys(imagePositionOptions).map((option) => (
+                  <option key={option} value={imagePositionOptions[option]}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label
+                htmlFor="imageSrc"
                 className="block text-sm font-medium text-gray-700">
                 URL de la imagen
               </label>
               <input
                 type="text"
-                name="src"
-                id="src"
-                value={form.image.src}
-                onChange={(e) => handleImageChange(e, setForm)}
+                name="imageSrc"
+                id="imageSrc"
+                value={form.imageSrc}
+                onChange={(e) => handleInputChange(e, setForm)}
                 className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               />
             </div>
             <div>
               <label
-                htmlFor="alt"
+                htmlFor="imageAlt"
                 className="block text-sm font-medium text-gray-700">
                 Alt de la imagen
               </label>
               <input
                 type="text"
-                name="alt"
-                id="alt"
-                value={form.image.alt}
-                onChange={(e) => handleImageChange(e, setForm)}
+                name="imageAlt"
+                id="imageAlt"
+                value={form.imageAlt}
+                onChange={(e) => handleInputChange(e, setForm)}
                 className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               />
             </div>
@@ -135,51 +157,49 @@ const Form = ({
           <legend className="text-lg font-bold text-gray-900 mb-4">
             Enlaces
           </legend>
-          {form.links.map((link, index) => (
-            <div
-              key={index}
-              className="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0 mb-4">
+          {showLink1 && (
+            <div className="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0 mb-4">
               <div>
                 <label
-                  htmlFor={`linkText-${index}`}
+                  htmlFor="button1Text"
                   className="block text-sm font-medium text-gray-700">
-                  Texto
+                  Texto del botón 1
                 </label>
                 <input
                   type="text"
-                  name="text"
-                  id={`linkText-${index}`}
-                  value={link.text}
-                  onChange={(e) => handleLinkChange(e, index, setForm)}
+                  name="button1Text"
+                  id="button1Text"
+                  value={form.button1Text}
+                  onChange={(e) => handleInputChange(e, setForm)}
                   className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 />
               </div>
               <div>
                 <label
-                  htmlFor={`linkHref-${index}`}
+                  htmlFor="button1Href"
                   className="block text-sm font-medium text-gray-700">
-                  Href
+                  Href del botón 1
                 </label>
                 <input
                   type="text"
-                  name="href"
-                  id={`linkHref-${index}`}
-                  value={link.href}
-                  onChange={(e) => handleLinkChange(e, index, setForm)}
+                  name="button1Href"
+                  id="button1Href"
+                  value={form.button1Href}
+                  onChange={(e) => handleInputChange(e, setForm)}
                   className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 />
               </div>
               <div>
                 <label
-                  htmlFor={`linkStyle-${index}`}
+                  htmlFor="button1Style"
                   className="block text-sm font-medium text-gray-700">
-                  Estilo
+                  Estilo del botón 1
                 </label>
                 <select
-                  name="style"
-                  id={`linkStyle-${index}`}
-                  value={link.style}
-                  onChange={(e) => handleLinkChange(e, index, setForm)}
+                  name="button1Style"
+                  id="button1Style"
+                  value={form.button1Style}
+                  onChange={(e) => handleInputChange(e, setForm)}
                   className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                   {Object.keys(buttonStyles).map((option) => (
                     <option key={option} value={buttonStyles[option]}>
@@ -190,31 +210,30 @@ const Form = ({
               </div>
               <div>
                 <label
-                  htmlFor={`linkIconName-${index}`}
+                  htmlFor="button1Icon"
                   className="block text-sm font-medium text-gray-700">
-                  Nombre del icono
+                  Icono del botón 1
                 </label>
                 <input
                   type="text"
-                  name="icon.name"
-                  id={`linkIconName-${index}`}
-                  value={link.icon.name}
-                  onChange={(e) => handleLinkChange(e, index, setForm)}
+                  name="button1Icon"
+                  id="button1Icon"
+                  value={form.button1Icon}
+                  onChange={(e) => handleInputChange(e, setForm)}
                   className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 />
               </div>
-
               <div>
                 <label
-                  htmlFor={`linkIconClass-${index}`}
+                  htmlFor="button1IconStyle"
                   className="block text-sm font-medium text-gray-700">
-                  Color del icono
+                  Estilo del icono del botón 1
                 </label>
                 <select
-                  name="icon.class"
-                  id={`linkIconClass-${index}`}
-                  value={link.icon.class}
-                  onChange={(e) => handleLinkChange(e, index, setForm)}
+                  name="button1IconStyle"
+                  id="button1IconStyle"
+                  value={form.button1IconStyle}
+                  onChange={(e) => handleInputChange(e, setForm)}
                   className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                   {Object.keys(iconStyles).map((option) => (
                     <option key={option} value={iconStyles[option]}>
@@ -223,14 +242,123 @@ const Form = ({
                   ))}
                 </select>
               </div>
+              <button
+                type="button"
+                onClick={() => setShowLink1(false)}
+                className="mt-2 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                Ocultar Enlace 1
+              </button>
             </div>
-          ))}
-          <button
-            type="button"
-            onClick={() => handleAddLink(setForm)}
-            className="mt-2 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Añadir Enlace
-          </button>
+          )}
+          {showLink2 && (
+            <div className="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0 mb-4">
+              <div>
+                <label
+                  htmlFor="button2Text"
+                  className="block text-sm font-medium text-gray-700">
+                  Texto del botón 2
+                </label>
+                <input
+                  type="text"
+                  name="button2Text"
+                  id="button2Text"
+                  value={form.button2Text}
+                  onChange={(e) => handleInputChange(e, setForm)}
+                  className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="button2Href"
+                  className="block text-sm font-medium text-gray-700">
+                  Href del botón 2
+                </label>
+                <input
+                  type="text"
+                  name="button2Href"
+                  id="button2Href"
+                  value={form.button2Href}
+                  onChange={(e) => handleInputChange(e, setForm)}
+                  className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="button2Style"
+                  className="block text-sm font-medium text-gray-700">
+                  Estilo del botón 2
+                </label>
+                <select
+                  name="button2Style"
+                  id="button2Style"
+                  value={form.button2Style}
+                  onChange={(e) => handleInputChange(e, setForm)}
+                  className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                  {Object.keys(buttonStyles).map((option) => (
+                    <option key={option} value={buttonStyles[option]}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label
+                  htmlFor="button2Icon"
+                  className="block text-sm font-medium text-gray-700">
+                  Icono del botón 2
+                </label>
+                <input
+                  type="text"
+                  name="button2Icon"
+                  id="button2Icon"
+                  value={form.button2Icon}
+                  onChange={(e) => handleInputChange(e, setForm)}
+                  className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="button2IconStyle"
+                  className="block text-sm font-medium text-gray-700">
+                  Estilo del icono del botón 2
+                </label>
+                <select
+                  name="button2IconStyle"
+                  id="button2IconStyle"
+                  value={form.button2IconStyle}
+                  onChange={(e) => handleInputChange(e, setForm)}
+                  className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                  {Object.keys(iconStyles).map((option) => (
+                    <option key={option} value={iconStyles[option]}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowLink2(false)}
+                className="mt-2 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                Ocultar Enlace 2
+              </button>
+            </div>
+          )}
+          {!showLink1 && (
+            <button
+              type="button"
+              onClick={() => setShowLink1(true)}
+              className="mt-2 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              Añadir Enlace 1
+            </button>
+          )}
+          {showLink1 && !showLink2 && (
+            <button
+              type="button"
+              onClick={() => setShowLink2(true)}
+              className="mt-2 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              Añadir Enlace 2
+            </button>
+          )}
         </fieldset>
       </div>
 

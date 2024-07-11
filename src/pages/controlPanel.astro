@@ -2,10 +2,17 @@
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/container.astro";
 import AdminPage from "@components/AdminPage.jsx";
+
+const DATABASE_ID = import.meta.env.PUBLIC_DATABASE_ID;
+const COLLECTION_ID = import.meta.env.PUBLIC_COLLECTION_ID;
 ---
 
 <Layout title="">
   <Container>
-    <AdminPage client:load />
+    <AdminPage
+      DATABASE_ID={DATABASE_ID}
+      COLLECTION_ID={COLLECTION_ID}
+      client:load
+    />
   </Container>
 </Layout>

@@ -1,61 +1,55 @@
+import { databases, ID } from "@lib/appwrite";
+
 export const handleInputChange = (e, setForm) => {
   const { name, value } = e.target;
   setForm((prevForm) => ({ ...prevForm, [name]: value }));
 };
 
-export const handleImageChange = (e, setForm) => {
-  const { name, value } = e.target;
-  setForm((prevForm) => ({
-    ...prevForm,
-    image: { ...prevForm.image, [name]: value },
-  }));
-};
-
-export const handleImageClassChange = (e, setForm, imageClassOptions) => {
-  const { value } = e.target;
-  setForm((prevForm) => ({
-    ...prevForm,
-    image: { ...prevForm.image, picClass: imageClassOptions[value] },
-  }));
-};
-
-export const handleAddLink = (setForm) => {
-  setForm((prevForm) => ({
-    ...prevForm,
-    links: [
-      ...prevForm.links,
-      { href: "", style: "", icon: { name: "", class: "" }, text: "" },
-    ],
-  }));
-};
-
-export const handleLinkChange = (e, index, setForm) => {
-  const { name, value } = e.target;
-  setForm((prevForm) => {
-    const newLinks = prevForm.links.map((link, i) =>
-      i === index ? { ...link, [name]: value } : link,
-    );
-    return { ...prevForm, links: newLinks };
-  });
-};
-
-export const handleSave = (e, form, setForm, setBlocks) => {
+export const handleSave = async (
+  e,
+  form,
+  setForm,
+  setBlocks,
+  DATABASE_ID,
+  COLLECTION_ID,
+) => {
   e.preventDefault();
-  setBlocks((prevBlocks) => [...prevBlocks, form]);
-  setForm({
-    title: "",
-    description: "",
-    image: {
-      class: "",
-      picClass: "",
-      src: "",
-      alt: "",
-      widths: [200, 400, 460], // Restablecer el valor al reiniciar el formulario
-    },
-    links: [],
-  });
-};
 
+  try {
+    const response = await databases.createDocument(
+      DATABASE_ID,
+      COLLECTION_ID,
+      ID.unique(),
+      form,
+    );
+    console.log(response);
+
+    // Agrega el nuevo bloque a la lista
+    setBlocks((prevBlocks) => [...prevBlocks, form]);
+
+    // Reinicia el formulario
+    setForm({
+      title: "",
+      content: "",
+      imagePosition: "",
+      imageStyle: "",
+      imageSrc: "",
+      imageAlt: "",
+      button1Text: "",
+      button1Href: "",
+      button1Style: "primary",
+      button1Icon: "",
+      button1IconStyle: "",
+      button2Text: "",
+      button2Href: "",
+      button2Style: "primary",
+      button2Icon: "",
+      button2IconStyle: "",
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
 export const handleDelete = (index, setBlocks) => {
   setBlocks((prevBlocks) => prevBlocks.filter((_, i) => i !== index));
 };

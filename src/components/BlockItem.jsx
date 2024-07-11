@@ -13,28 +13,28 @@ const BlockItem = ({ block, handleEdit, handleDelete }) => {
       <div className="infoblock flex justify-between items-start gap-2">
         <div>
           <h2>{block.title}</h2>
-          <p>{truncateText(block.description, 60)}</p>
-          {block.links && block.links.length > 0 && (
-            <ul>
-              {block.links.map((link, linkIndex) => (
-                <li key={linkIndex}>
-                  <a href={link.href} className={link.style}>
-                    {link.icon && (
-                      <i className={link.icon.class}>{link.icon.name}</i>
-                    )}
-                    {link.text}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          )}
+          <p>{truncateText(block.content, 60)}</p>
+          <div>
+            {block.button1Text && (
+              <a href={block.button1Href} className={block.button1Style}>
+                <i className={block.button1IconStyle}>{block.button1Icon}</i>{" "}
+                {block.button1Text}
+              </a>
+            )}
+            {block.button2Text && (
+              <a href={block.button2Href} className={block.button2Style}>
+                <i className={block.button2IconStyle}>{block.button2Icon}</i>{" "}
+                {block.button2Text}
+              </a>
+            )}
+          </div>
         </div>
-        {block.image.src && (
-          <div className={block.image.class}>
+        {block.imageSrc && (
+          <div className={block.imageStyle}>
             <img
-              className={`${block.image.picClass} max-w-[150px]`}
-              src={block.image.src}
-              alt={block.image.alt}
+              className={`max-w-[150px] ${block.imageStyle}`}
+              src={block.imageSrc}
+              alt={block.imageAlt}
             />
           </div>
         )}

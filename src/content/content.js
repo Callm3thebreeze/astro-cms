@@ -13,7 +13,7 @@ export const head = {
   },
   title: "Commercial Portfolio ",
   titleClass: "text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight",
-  description:
+  content:
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to",
   links: [
     {
@@ -51,37 +51,37 @@ export const features = {
   items: [
     {
       title: "Bring Your Own Framework",
-      description:
+      content:
         "Build your site using React, Svelte, Vue, Preact, web components, or just plain ol' HTML + JavaScript.",
       icon: "bx:bxs-briefcase",
     },
     {
       title: "100% Static HTML, No JS",
-      description:
+      content:
         "Astro renders your entire page to static HTML, removing all JavaScript from your final build by default.",
       icon: "bx:bxs-window-alt",
     },
     {
       title: "On-Demand Components",
-      description:
+      content:
         "Need some JS? Astro can automatically hydrate interactive components when they become visible on the page.",
       icon: "bx:bxs-data",
     },
     {
       title: "Broad Integration",
-      description:
+      content:
         "Astro supports TypeScript, Scoped CSS, CSS Modules, Sass, Tailwind, Markdown, MDX, and any other npm packages.",
       icon: "bx:bxs-bot",
     },
     {
       title: "SEO Enabled",
-      description:
+      content:
         "Automatic sitemaps, RSS feeds, pagination and collections take the pain out of SEO and syndication. It just works!",
       icon: "bx:bxs-file-find",
     },
     {
       title: "Community",
-      description:
+      content:
         "Astro is an open source project powered by hundreds of contributors making thousands of individual contributions.",
       icon: "bx:bxs-user",
     },
@@ -98,7 +98,7 @@ export const block1 = {
   },
   title: "Ola K Ase",
   titleClass: "text-4xl font-bold lg:tracking-tight",
-  description:
+  content:
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to",
 };
 
@@ -112,6 +112,6 @@ export const block2 = {
   },
   title: "Ponada aki a ve",
   titleClass: "text-4xl font-bold lg:tracking-tight",
-  description:
+  content:
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to",
 };

@@ -10,10 +10,8 @@ const { content } = Astro.props;
   <div>
     {content.title && <h1 class={content.titleClass}>{content.title}</h1>}
     {
-      content.description && (
-        <p class="text-lg mt-4 text-slate-600 max-w-xl">
-          {content.description}
-        </p>
+      content.content && (
+        <p class="text-lg mt-4 text-slate-600 max-w-xl">{content.content}</p>
       )
     }
     {
@@ -42,7 +40,7 @@ const { content } = Astro.props;
           class={content.image.picClass}
           src={content.image.src}
           alt={content.image.alt}
-          widths={content.image.widths}
+          widths={[200, 400, 460]}
           sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 460px"
           loading="eager"
           format="avif"
