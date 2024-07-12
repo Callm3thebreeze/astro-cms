@@ -1,5 +1,18 @@
 import { databases, ID } from "@lib/appwrite";
 
+export const fetchBlocks = async (DATABASE_ID, COLLECTION_ID, setBlocks) => {
+  try {
+    const response = await databases.listDocuments(DATABASE_ID, COLLECTION_ID);
+    const blocks = response.documents.map((doc) => ({
+      ...doc,
+      id: doc.$id, // Asegúrate de incluir el id en los documentos cargados
+    }));
+    setBlocks(blocks);
+  } catch (error) {
+    console.error("Error fetching documents:", error);
+  }
+};
+
 export const handleInputChange = (e, setForm) => {
   const { name, value } = e.target;
   setForm((prevForm) => ({ ...prevForm, [name]: value }));
@@ -15,30 +28,57 @@ export const handleSave = async (
 ) => {
   e.preventDefault();
 
-  // Crear una copia del objeto form sin el campo id
+  // Crear una copia del objeto form sin el campo id y sin las propiedades adicionales
   const { id, ...formData } = form;
+
+  // Filtrar solo las propiedades esperadas
+  const allowedFields = [
+    "title",
+    "content",
+    "titleSize",
+    "imagePosition",
+    "imageStyle",
+    "imageSrc",
+    "imageAlt",
+    "button1Text",
+    "button1Href",
+    "button1Style",
+    "button1Icon",
+    "button1IconStyle",
+    "button2Text",
+    "button2Href",
+    "button2Style",
+    "button2Icon",
+    "button2IconStyle",
+  ];
+
+  const filteredData = Object.keys(formData)
+    .filter((key) => allowedFields.includes(key))
+    .reduce((obj, key) => {
+      obj[key] = formData[key];
+      return obj;
+    }, {});
 
   try {
     let response;
     if (id) {
-      // Actualizar el documento existente
       response = await databases.updateDocument(
         DATABASE_ID,
         COLLECTION_ID,
         id,
-        formData,
+        filteredData,
       );
+      console.log("Document updated:", response);
     } else {
-      // Crear un nuevo documento
       response = await databases.createDocument(
         DATABASE_ID,
         COLLECTION_ID,
         ID.unique(),
-        formData,
+        filteredData,
       );
+      console.log("Document created:", response);
     }
 
-    // Agregar o actualizar el bloque en la lista
     setBlocks((prevBlocks) => {
       const newBlocks = [...prevBlocks];
       const existingBlockIndex = newBlocks.findIndex(
@@ -52,7 +92,6 @@ export const handleSave = async (
       return newBlocks;
     });
 
-    // Reiniciar el formulario
     setForm({
       title: "",
       content: "",
@@ -71,6 +110,7 @@ export const handleSave = async (
       button2Style: "primary",
       button2Icon: "",
       button2IconStyle: "",
+      id: null,
     });
   } catch (error) {
     console.error("Error saving document:", error);
@@ -85,6 +125,10 @@ export const handleDelete = async (
   COLLECTION_ID,
 ) => {
   const block = blocks[index];
+  if (!block.id) {
+    console.error("No document ID found for block:", block);
+    return;
+  }
   console.log(`Deleting document with ID: ${block.id}`);
   try {
     await databases.deleteDocument(DATABASE_ID, COLLECTION_ID, block.id);
@@ -94,13 +138,8 @@ export const handleDelete = async (
   }
 };
 
-export const handleEdit = async (index, blocks, setForm, setBlocks) => {
+export const handleEdit = (index, blocks, setForm) => {
   const block = blocks[index];
   console.log(`Editing document with ID: ${block.id}`);
-  try {
-    setForm(block);
-    setBlocks((prevBlocks) => prevBlocks.filter((_, i) => i !== index));
-  } catch (error) {
-    console.error("Error editing document:", error);
-  }
+  setForm(block);
 };

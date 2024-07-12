@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Form from "./Form";
 import BlockList from "./BlockList";
 import {
@@ -6,6 +6,7 @@ import {
   handleSave,
   handleDelete,
   handleEdit,
+  fetchBlocks,
 } from "../utils/handlers";
 
 const AdminPage = ({ DATABASE_ID, COLLECTION_ID }) => {
@@ -13,7 +14,7 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID }) => {
   const [form, setForm] = useState({
     title: "",
     content: "",
-    titleSize: "small", // Valor predeterminado
+    titleSize: "small",
     imagePosition: "",
     imageStyle: "",
     imageSrc: "",
@@ -33,8 +34,11 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID }) => {
   const [showLink1, setShowLink1] = useState(false);
   const [showLink2, setShowLink2] = useState(false);
 
+  useEffect(() => {
+    fetchBlocks(DATABASE_ID, COLLECTION_ID, setBlocks);
+  }, [DATABASE_ID, COLLECTION_ID]);
+
   const handleFormSave = (e) => {
-    console.log("Saving form...");
     handleSave(e, form, setForm, setBlocks, DATABASE_ID, COLLECTION_ID);
   };
 
@@ -53,16 +57,7 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID }) => {
       />
       <BlockList
         blocks={blocks}
-        handleEdit={(index) =>
-          handleEdit(
-            index,
-            blocks,
-            setForm,
-            setBlocks,
-            DATABASE_ID,
-            COLLECTION_ID,
-          )
-        }
+        handleEdit={(index) => handleEdit(index, blocks, setForm)}
         handleDelete={(index) =>
           handleDelete(index, blocks, setBlocks, DATABASE_ID, COLLECTION_ID)
         }
