@@ -30,6 +30,7 @@ export const handleSave = async (
     // Reinicia el formulario
     setForm({
       title: "",
+      titleSize: "text-4xl font-bold lg:tracking-tight",
       content: "",
       imagePosition: "",
       imageStyle: "",

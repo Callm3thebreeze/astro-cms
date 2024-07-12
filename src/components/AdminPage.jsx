@@ -12,6 +12,7 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID }) => {
   const [blocks, setBlocks] = useState([]);
   const [form, setForm] = useState({
     title: "",
+    titleSize: "text-4xl font-bold lg:tracking-tight",
     content: "",
     imagePosition: "",
     imageStyle: "",

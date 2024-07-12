@@ -1,6 +1,3 @@
-import React from "react";
-import { VscNoNewline } from "react-icons/vsc";
-
 const Form = ({
   form,
   setForm,
@@ -11,6 +8,11 @@ const Form = ({
   setShowLink1,
   setShowLink2,
 }) => {
+  const titleSizeOptions = {
+    small: "text-4xl font-bold lg:tracking-tight",
+    big: "text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight",
+  };
+
   const imageClassOptions = {
     Color: "flex justify-center w-full",
     "Black & White": "filter grayscale",
@@ -60,9 +62,28 @@ const Form = ({
           </div>
           <div>
             <label
+              htmlFor="titleSize"
+              className="block text-sm font-medium text-gray-700">
+              Tamaño del título
+            </label>
+            <select
+              name="titleSize"
+              id="titleSize"
+              value={form.titleSize}
+              onChange={(e) => handleInputChange(e, setForm)}
+              className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+              {Object.keys(titleSizeOptions).map((option) => (
+                <option key={option} value={titleSizeOptions[option]}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label
               htmlFor="content"
               className="block text-sm font-medium text-gray-700">
-              Descripción
+              Contenido
             </label>
             <textarea
               name="content"
@@ -84,7 +105,7 @@ const Form = ({
               <label
                 htmlFor="imageStyle"
                 className="block text-sm font-medium text-gray-700">
-                Clase de imagen
+                Estilo de imagen
               </label>
               <select
                 name="imageStyle"
