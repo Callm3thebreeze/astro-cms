@@ -15,23 +15,48 @@ export const handleSave = async (
 ) => {
   e.preventDefault();
 
+  // Crear una copia del objeto form sin el campo id
+  const { id, ...formData } = form;
+
   try {
-    const response = await databases.createDocument(
-      DATABASE_ID,
-      COLLECTION_ID,
-      ID.unique(),
-      form,
-    );
-    console.log(response);
+    let response;
+    if (id) {
+      // Actualizar el documento existente
+      response = await databases.updateDocument(
+        DATABASE_ID,
+        COLLECTION_ID,
+        id,
+        formData,
+      );
+    } else {
+      // Crear un nuevo documento
+      response = await databases.createDocument(
+        DATABASE_ID,
+        COLLECTION_ID,
+        ID.unique(),
+        formData,
+      );
+    }
 
-    // Agrega el nuevo bloque a la lista
-    setBlocks((prevBlocks) => [...prevBlocks, form]);
+    // Agregar o actualizar el bloque en la lista
+    setBlocks((prevBlocks) => {
+      const newBlocks = [...prevBlocks];
+      const existingBlockIndex = newBlocks.findIndex(
+        (block) => block.id === id,
+      );
+      if (existingBlockIndex > -1) {
+        newBlocks[existingBlockIndex] = { ...form, id: response.$id };
+      } else {
+        newBlocks.push({ ...form, id: response.$id });
+      }
+      return newBlocks;
+    });
 
-    // Reinicia el formulario
+    // Reiniciar el formulario
     setForm({
       title: "",
-      titleSize: "text-4xl font-bold lg:tracking-tight",
       content: "",
+      titleSize: "small",
       imagePosition: "",
       imageStyle: "",
       imageSrc: "",
@@ -48,14 +73,34 @@ export const handleSave = async (
       button2IconStyle: "",
     });
   } catch (error) {
-    console.error(error);
+    console.error("Error saving document:", error);
   }
 };
-export const handleDelete = (index, setBlocks) => {
-  setBlocks((prevBlocks) => prevBlocks.filter((_, i) => i !== index));
+
+export const handleDelete = async (
+  index,
+  blocks,
+  setBlocks,
+  DATABASE_ID,
+  COLLECTION_ID,
+) => {
+  const block = blocks[index];
+  console.log(`Deleting document with ID: ${block.id}`);
+  try {
+    await databases.deleteDocument(DATABASE_ID, COLLECTION_ID, block.id);
+    setBlocks((prevBlocks) => prevBlocks.filter((_, i) => i !== index));
+  } catch (error) {
+    console.error("Error deleting document:", error);
+  }
 };
 
-export const handleEdit = (index, blocks, setForm, setBlocks) => {
-  setForm(blocks[index]);
-  handleDelete(index, setBlocks);
+export const handleEdit = async (index, blocks, setForm, setBlocks) => {
+  const block = blocks[index];
+  console.log(`Editing document with ID: ${block.id}`);
+  try {
+    setForm(block);
+    setBlocks((prevBlocks) => prevBlocks.filter((_, i) => i !== index));
+  } catch (error) {
+    console.error("Error editing document:", error);
+  }
 };

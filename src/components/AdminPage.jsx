@@ -12,8 +12,8 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID }) => {
   const [blocks, setBlocks] = useState([]);
   const [form, setForm] = useState({
     title: "",
-    titleSize: "text-4xl font-bold lg:tracking-tight",
     content: "",
+    titleSize: "small", // Valor predeterminado
     imagePosition: "",
     imageStyle: "",
     imageSrc: "",
@@ -28,11 +28,13 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID }) => {
     button2Style: "primary",
     button2Icon: "",
     button2IconStyle: "",
+    id: null,
   });
   const [showLink1, setShowLink1] = useState(false);
   const [showLink2, setShowLink2] = useState(false);
 
   const handleFormSave = (e) => {
+    console.log("Saving form...");
     handleSave(e, form, setForm, setBlocks, DATABASE_ID, COLLECTION_ID);
   };
 
@@ -51,8 +53,19 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID }) => {
       />
       <BlockList
         blocks={blocks}
-        handleEdit={(index) => handleEdit(index, blocks, setForm, setBlocks)}
-        handleDelete={(index) => handleDelete(index, setBlocks)}
+        handleEdit={(index) =>
+          handleEdit(
+            index,
+            blocks,
+            setForm,
+            setBlocks,
+            DATABASE_ID,
+            COLLECTION_ID,
+          )
+        }
+        handleDelete={(index) =>
+          handleDelete(index, blocks, setBlocks, DATABASE_ID, COLLECTION_ID)
+        }
       />
     </main>
   );
