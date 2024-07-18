@@ -1,11 +1,11 @@
-import { databases, ID } from "@lib/appwrite";
+import { databases, storage, ID } from "@lib/appwrite";
 
 export const fetchBlocks = async (DATABASE_ID, COLLECTION_ID, setBlocks) => {
   try {
     const response = await databases.listDocuments(DATABASE_ID, COLLECTION_ID);
     const blocks = response.documents.map((doc) => ({
       ...doc,
-      id: doc.$id, // Asegúrate de incluir el id en los documentos cargados
+      id: doc.$id,
     }));
     setBlocks(blocks);
   } catch (error) {
@@ -27,6 +27,7 @@ export const handleSave = async (
   COLLECTION_ID,
 ) => {
   e.preventDefault();
+  console.log("Form data before save:", form);
 
   // Crear una copia del objeto form sin el campo id y sin las propiedades adicionales
   const { id, ...formData } = form;
@@ -40,6 +41,7 @@ export const handleSave = async (
     "imageStyle",
     "imageSrc",
     "imageAlt",
+    "imageFileId",
     "button1Text",
     "button1Href",
     "button1Style",
@@ -100,6 +102,7 @@ export const handleSave = async (
       imageStyle: "",
       imageSrc: "",
       imageAlt: "",
+      imageFileId: null, // Restablecer el campo
       button1Text: "",
       button1Href: "",
       button1Style: "primary",
@@ -123,6 +126,7 @@ export const handleDelete = async (
   setBlocks,
   DATABASE_ID,
   COLLECTION_ID,
+  BUCKET_ID,
 ) => {
   const block = blocks[index];
   if (!block.id) {
@@ -131,7 +135,15 @@ export const handleDelete = async (
   }
   console.log(`Deleting document with ID: ${block.id}`);
   try {
+    // Eliminar el documento
     await databases.deleteDocument(DATABASE_ID, COLLECTION_ID, block.id);
+
+    // Eliminar el archivo de imagen asociado si existe
+    if (block.imageFileId) {
+      await storage.deleteFile(BUCKET_ID, block.imageFileId);
+    }
+
+    // Actualizar el estado
     setBlocks((prevBlocks) => prevBlocks.filter((_, i) => i !== index));
   } catch (error) {
     console.error("Error deleting document:", error);

@@ -20,6 +20,7 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
     imageStyle: "",
     imageSrc: "",
     imageAlt: "",
+    imageFileId: null, // Añade este campo para almacenar el ID del archivo
     button1Text: "",
     button1Href: "",
     button1Style: "primary",
@@ -51,7 +52,11 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
     try {
       const response = await storage.createFile(BUCKET_ID, ID.unique(), file);
       const fileUrl = storage.getFileDownload(BUCKET_ID, response.$id);
-      setForm((prevForm) => ({ ...prevForm, imageSrc: fileUrl.href }));
+      setForm((prevForm) => ({
+        ...prevForm,
+        imageSrc: fileUrl,
+        imageFileId: response.$id,
+      }));
     } catch (error) {
       console.error("Error uploading file:", error);
     }
@@ -75,7 +80,14 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
         blocks={blocks}
         handleEdit={(index) => handleEdit(index, blocks, setForm)}
         handleDelete={(index) =>
-          handleDelete(index, blocks, setBlocks, DATABASE_ID, COLLECTION_ID)
+          handleDelete(
+            index,
+            blocks,
+            setBlocks,
+            DATABASE_ID,
+            COLLECTION_ID,
+            BUCKET_ID,
+          )
         }
       />
     </main>
