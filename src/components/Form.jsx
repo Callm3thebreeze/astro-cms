@@ -7,6 +7,7 @@ const Form = ({
   showLink2,
   setShowLink1,
   setShowLink2,
+  handleFileChange,
 }) => {
   const titleSizeOptions = {
     small: "text-4xl font-bold lg:tracking-tight",
@@ -151,6 +152,20 @@ const Form = ({
                 id="imageSrc"
                 value={form.imageSrc}
                 onChange={(e) => handleInputChange(e, setForm)}
+                className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="imageFile"
+                className="block text-sm font-medium text-gray-700">
+                Subir Imagen
+              </label>
+              <input
+                type="file"
+                name="imageFile"
+                id="imageFile"
+                onChange={(e) => handleFileChange(e, setForm)}
                 className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               />
             </div>

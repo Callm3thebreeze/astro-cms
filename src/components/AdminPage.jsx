@@ -8,8 +8,9 @@ import {
   handleEdit,
   fetchBlocks,
 } from "../utils/handlers";
+import { storage, databases, ID } from "@lib/appwrite";
 
-const AdminPage = ({ DATABASE_ID, COLLECTION_ID }) => {
+const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
   const [blocks, setBlocks] = useState([]);
   const [form, setForm] = useState({
     title: "",
@@ -39,7 +40,21 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID }) => {
   }, [DATABASE_ID, COLLECTION_ID]);
 
   const handleFormSave = (e) => {
+    console.log("Saving form...");
     handleSave(e, form, setForm, setBlocks, DATABASE_ID, COLLECTION_ID);
+  };
+
+  const handleFileChange = async (e, setForm) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      const response = await storage.createFile(BUCKET_ID, ID.unique(), file);
+      const fileUrl = storage.getFileDownload(BUCKET_ID, response.$id);
+      setForm((prevForm) => ({ ...prevForm, imageSrc: fileUrl.href }));
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
   };
 
   return (
@@ -54,6 +69,7 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID }) => {
         showLink2={showLink2}
         setShowLink1={setShowLink1}
         setShowLink2={setShowLink2}
+        handleFileChange={handleFileChange}
       />
       <BlockList
         blocks={blocks}
