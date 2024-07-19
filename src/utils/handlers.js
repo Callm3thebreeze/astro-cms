@@ -18,6 +18,24 @@ export const handleInputChange = (e, setForm) => {
   setForm((prevForm) => ({ ...prevForm, [name]: value }));
 };
 
+const saveContentToFile = async (head, blocks) => {
+  try {
+    const response = await fetch("/api/saveContent", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ head, blocks }),
+    });
+    if (!response.ok) {
+      throw new Error("Error saving content");
+    }
+    console.log("Content saved successfully");
+  } catch (error) {
+    console.error("Error saving content:", error);
+  }
+};
+
 export const handleSave = async (
   e,
   form,
@@ -29,10 +47,8 @@ export const handleSave = async (
   e.preventDefault();
   console.log("Form data before save:", form);
 
-  // Crear una copia del objeto form sin el campo id y sin las propiedades adicionales
   const { id, ...formData } = form;
 
-  // Filtrar solo las propiedades esperadas
   const allowedFields = [
     "title",
     "content",
@@ -81,18 +97,86 @@ export const handleSave = async (
       console.log("Document created:", response);
     }
 
-    setBlocks((prevBlocks) => {
-      const newBlocks = [...prevBlocks];
-      const existingBlockIndex = newBlocks.findIndex(
-        (block) => block.id === id,
-      );
-      if (existingBlockIndex > -1) {
-        newBlocks[existingBlockIndex] = { ...form, id: response.$id };
-      } else {
-        newBlocks.push({ ...form, id: response.$id });
-      }
-      return newBlocks;
-    });
+    const newBlocksResponse = await databases.listDocuments(
+      DATABASE_ID,
+      COLLECTION_ID,
+    );
+    const updatedBlocks = newBlocksResponse.documents.map((doc) => ({
+      ...doc,
+      id: doc.$id,
+    }));
+
+    const head = updatedBlocks.length > 0 ? updatedBlocks[0] : {};
+    const blocks = updatedBlocks.slice(1).map((block, index) => ({
+      ...block,
+      titleClass: block.titleSize,
+      image: {
+        class: block.imagePosition,
+        picClass: block.imageStyle,
+        src: block.imageSrc,
+        alt: block.imageAlt,
+        widths: [200, 400, 460],
+        height: 300, // Aquí puedes ajustar el valor según sea necesario
+      },
+      links: [
+        {
+          href: block.button1Href,
+          style: block.button1Style,
+          icon: {
+            name: block.button1Icon,
+            class: block.button1IconStyle,
+          },
+          text: block.button1Text,
+        },
+        {
+          href: block.button2Href,
+          style: block.button2Style,
+          icon: {
+            name: block.button2Icon,
+            class: block.button2IconStyle,
+          },
+          text: block.button2Text,
+        },
+      ].filter((link) => link.text),
+    }));
+
+    await saveContentToFile(
+      {
+        ...head,
+        titleClass: head.titleSize,
+        image: {
+          class: head.imagePosition,
+          picClass: head.imageStyle,
+          src: head.imageSrc,
+          alt: head.imageAlt,
+          widths: [200, 400, 460],
+          height: 300, // Ajusta según sea necesario
+        },
+        links: [
+          {
+            href: head.button1Href,
+            style: head.button1Style,
+            icon: {
+              name: head.button1Icon,
+              class: head.button1IconStyle,
+            },
+            text: head.button1Text,
+          },
+          {
+            href: head.button2Href,
+            style: head.button2Style,
+            icon: {
+              name: head.button2Icon,
+              class: head.button2IconStyle,
+            },
+            text: head.button2Text,
+          },
+        ].filter((link) => link.text),
+      },
+      blocks,
+    );
+
+    setBlocks(updatedBlocks);
 
     setForm({
       title: "",
@@ -102,7 +186,7 @@ export const handleSave = async (
       imageStyle: "",
       imageSrc: "",
       imageAlt: "",
-      imageFileId: null, // Restablecer el campo
+      imageFileId: null,
       button1Text: "",
       button1Href: "",
       button1Style: "primary",
@@ -135,15 +219,10 @@ export const handleDelete = async (
   }
   console.log(`Deleting document with ID: ${block.id}`);
   try {
-    // Eliminar el documento
     await databases.deleteDocument(DATABASE_ID, COLLECTION_ID, block.id);
-
-    // Eliminar el archivo de imagen asociado si existe
     if (block.imageFileId) {
       await storage.deleteFile(BUCKET_ID, block.imageFileId);
     }
-
-    // Actualizar el estado
     setBlocks((prevBlocks) => prevBlocks.filter((_, i) => i !== index));
   } catch (error) {
     console.error("Error deleting document:", error);
