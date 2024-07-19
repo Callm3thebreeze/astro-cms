@@ -15,12 +15,12 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
   const [form, setForm] = useState({
     title: "",
     content: "",
-    titleSize: "small",
-    imagePosition: "",
-    imageStyle: "",
+    titleSize: "text-4xl font-bold lg:tracking-tight",
+    imagePosition: "md:order-1 md:flex",
+    imageStyle: "flex justify-center w-full",
     imageSrc: "",
     imageAlt: "",
-    imageFileId: null, // Añade este campo para almacenar el ID del archivo
+    imageFileId: null,
     button1Text: "",
     button1Href: "",
     button1Style: "primary",

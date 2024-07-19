@@ -5,15 +5,14 @@ import Layout from "../layouts/Layout.astro";
 import Infoblock from "@components/infoblock.astro";
 import Cta from "@components/cta.astro";
 import Logos from "@components/logos.astro";
-import { head, block1, block2 } from "@content/infoBlocks.js";
+import { head, blocks } from "@content/infoBlocks.js";
 ---
 
 <Layout title="Astro CMS">
   <Container>
     <Infoblock content={head} />
     <Features />
-    <Infoblock content={block1} />
-    <Infoblock content={block2} />
+    {blocks.map((block, index) => <Infoblock content={block} key={index} />)}
     <Logos />
     <Cta />
   </Container>

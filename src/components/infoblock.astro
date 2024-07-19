@@ -25,7 +25,9 @@ const { content } = Astro.props;
               rel="noopener"
               class="flex gap-1 items-center justify-center"
               target="_blank">
-              <Icon class={link.icon.class} name={link.icon.name} />
+              {link.icon.name && (
+                <Icon class={link.icon.class} name={link.icon.name} />
+              )}
               {link.text}
             </Link>
           ))}
@@ -34,7 +36,7 @@ const { content } = Astro.props;
     }
   </div>
   {
-    content.image && (
+    content.image.src && (
       <div class={content.image.class}>
         <Picture
           class={content.image.picClass}

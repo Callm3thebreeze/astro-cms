@@ -6,19 +6,11 @@ export async function POST({ request }) {
   const data = await request.json();
   const filePath = join(process.cwd(), "src", "content", "infoBlocks.js");
 
-  const blocks = data.blocks.reduce((acc, block, index) => {
-    acc[`block${index + 1}`] = block;
-    return acc;
-  }, {});
+  const blocks = data.blocks;
 
   const content = `
     export const head = ${JSON.stringify(data.head, null, 2)};
-    ${Object.entries(blocks)
-      .map(
-        ([key, value]) =>
-          `export const ${key} = ${JSON.stringify(value, null, 2)};`,
-      )
-      .join("\n")}
+    export const blocks = ${JSON.stringify(blocks, null, 2)};
   `;
 
   try {

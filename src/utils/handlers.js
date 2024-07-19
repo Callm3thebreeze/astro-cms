@@ -181,9 +181,9 @@ export const handleSave = async (
     setForm({
       title: "",
       content: "",
-      titleSize: "",
-      imagePosition: "",
-      imageStyle: "",
+      titleSize: "text-4xl font-bold lg:tracking-tight",
+      imagePosition: "md:order-1 md:flex",
+      imageStyle: "flex justify-center w-full",
       imageSrc: "",
       imageAlt: "",
       imageFileId: null,
