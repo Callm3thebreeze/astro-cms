@@ -181,7 +181,7 @@ export const handleSave = async (
     setForm({
       title: "",
       content: "",
-      titleSize: "small",
+      titleSize: "",
       imagePosition: "",
       imageStyle: "",
       imageSrc: "",
