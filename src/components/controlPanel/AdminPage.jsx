@@ -7,8 +7,10 @@ import {
   handleDelete,
   handleEdit,
   fetchBlocks,
+  handleImageSizeChange,
+  handleImageStyleChange,
 } from "@utils/handlers";
-import { storage, databases, ID } from "@lib/appwrite";
+import { storage, ID } from "@lib/appwrite";
 
 const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
   const [blocks, setBlocks] = useState([]);
@@ -75,6 +77,8 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
         setShowLink1={setShowLink1}
         setShowLink2={setShowLink2}
         handleFileChange={handleFileChange}
+        handleImageSizeChange={handleImageSizeChange}
+        handleImageStyleChange={handleImageStyleChange}
       />
       <BlockList
         blocks={blocks}

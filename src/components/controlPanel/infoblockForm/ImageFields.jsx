@@ -1,3 +1,5 @@
+import React from "react";
+
 const ImageFields = ({
   form,
   handleInputChange,
@@ -6,8 +8,9 @@ const ImageFields = ({
   imagePositionOptions,
   imageSizeOptions,
   handleImageSizeChange,
-}) => (
-  <div className="md:col-span-1 bg-gray-100 rounded-md p-4">
+  handleImageStyleChange,
+}) => {
+  return (
     <fieldset>
       <legend className="text-lg font-bold text-gray-900 mb-4">Imagen</legend>
       <div className="space-y-4">
@@ -20,30 +23,12 @@ const ImageFields = ({
           <select
             name="imageStyle"
             id="imageStyle"
-            value={form.imageStyle}
-            onChange={handleInputChange}
+            value={form.imageStyle || ""}
+            onChange={handleImageStyleChange}
             className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+            <option value="">Seleccione...</option>
             {Object.keys(imageClassOptions).map((option) => (
               <option key={option} value={imageClassOptions[option]}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label
-            htmlFor="imageSize"
-            className="block text-sm font-medium text-gray-700">
-            Tamaño de imagen
-          </label>
-          <select
-            name="imageSize"
-            id="imageSize"
-            value={form.imageSize}
-            onChange={handleImageSizeChange}
-            className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-            {Object.keys(imageSizeOptions).map((option) => (
-              <option key={option} value={option}>
                 {option}
               </option>
             ))}
@@ -58,12 +43,33 @@ const ImageFields = ({
           <select
             name="imagePosition"
             id="imagePosition"
-            value={form.imagePosition}
+            value={form.imagePosition || ""}
             onChange={handleInputChange}
             className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+            <option value="">Seleccione...</option>
             {Object.keys(imagePositionOptions).map((option) => (
               <option key={option} value={imagePositionOptions[option]}>
                 {option}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label
+            htmlFor="imageSize"
+            className="block text-sm font-medium text-gray-700">
+            Tamaño de la imagen
+          </label>
+          <select
+            name="imageSize"
+            id="imageSize"
+            value={form.imageSize || ""}
+            onChange={handleImageSizeChange}
+            className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+            <option value="">Seleccione...</option>
+            {Object.keys(imageSizeOptions).map((option) => (
+              <option key={option} value={imageSizeOptions[option]}>
+                {option.charAt(0).toUpperCase() + option.slice(1)}
               </option>
             ))}
           </select>
@@ -114,7 +120,7 @@ const ImageFields = ({
         </div>
       </div>
     </fieldset>
-  </div>
-);
+  );
+};
 
 export default ImageFields;

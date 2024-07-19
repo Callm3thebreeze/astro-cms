@@ -12,6 +12,8 @@ const Form = ({
   setShowLink1,
   setShowLink2,
   handleFileChange,
+  handleImageSizeChange,
+  handleImageStyleChange,
 }) => {
   const titleSizeOptions = {
     small: "text-4xl font-bold lg:tracking-tight",
@@ -31,8 +33,8 @@ const Form = ({
   };
 
   const imageSizeOptions = {
-    small: "w-1/4",
-    medium: "w-2/4",
+    small: "w-2/4",
+    medium: "w-3/4",
     big: "w-full",
   };
 
@@ -46,15 +48,6 @@ const Form = ({
   const iconStyles = {
     white: "text-white w-5 h-5",
     black: "text-black w-5 h-5",
-  };
-
-  const handleImageSizeChange = (e) => {
-    const { value } = e.target;
-    setForm((prevForm) => ({
-      ...prevForm,
-      imageSize: value,
-      imageStyle: `${prevForm.imageStyle.split(" ")[0]} ${imageSizeOptions[value]}`,
-    }));
   };
 
   return (
@@ -71,10 +64,11 @@ const Form = ({
         form={form}
         handleInputChange={(e) => handleInputChange(e, setForm)}
         handleFileChange={(e) => handleFileChange(e, setForm)}
+        handleImageSizeChange={(e) => handleImageSizeChange(e, setForm)}
+        handleImageStyleChange={(e) => handleImageStyleChange(e, setForm)}
         imageClassOptions={imageClassOptions}
         imagePositionOptions={imagePositionOptions}
         imageSizeOptions={imageSizeOptions}
-        handleImageSizeChange={handleImageSizeChange}
       />
       <LinkFields
         form={form}

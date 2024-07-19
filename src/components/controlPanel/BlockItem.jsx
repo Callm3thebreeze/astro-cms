@@ -1,5 +1,3 @@
-import React from "react";
-
 const BlockItem = ({ block, handleEdit, handleDelete }) => {
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {

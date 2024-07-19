@@ -18,6 +18,39 @@ export const handleInputChange = (e, setForm) => {
   setForm((prevForm) => ({ ...prevForm, [name]: value }));
 };
 
+export const handleImageSizeChange = (e, setForm) => {
+  const { value } = e.target;
+  setForm((prevForm) => {
+    const newImageStyle =
+      prevForm.imageStyle
+        .split(" ")
+        .filter((cls) => !cls.startsWith("w-"))
+        .join(" ") + ` ${value}`;
+
+    return {
+      ...prevForm,
+      imageSize: value,
+      imageStyle: newImageStyle,
+    };
+  });
+};
+
+export const handleImageStyleChange = (e, setForm) => {
+  const { value } = e.target;
+  setForm((prevForm) => {
+    const newImageStyle =
+      prevForm.imageStyle
+        .split(" ")
+        .filter((cls) => cls.startsWith("w-"))
+        .join(" ") + ` ${value}`;
+
+    return {
+      ...prevForm,
+      imageStyle: newImageStyle,
+    };
+  });
+};
+
 const saveContentToFile = async (head, blocks) => {
   try {
     const response = await fetch("/api/saveContent", {
@@ -115,8 +148,6 @@ export const handleSave = async (
         picClass: block.imageStyle,
         src: block.imageSrc,
         alt: block.imageAlt,
-        widths: [200, 400, 460],
-        height: 300, // Aquí puedes ajustar el valor según sea necesario
       },
       links: [
         {
@@ -149,8 +180,6 @@ export const handleSave = async (
           picClass: head.imageStyle,
           src: head.imageSrc,
           alt: head.imageAlt,
-          widths: [200, 400, 460],
-          height: 300, // Ajusta según sea necesario
         },
         links: [
           {
