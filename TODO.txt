@@ -7,3 +7,5 @@
 - desarrollar panel de control de las features
 - desarrollar panel de control del bloque de logos
 - desarrollar panel de control del cta
+- implementar autenticación para acceder al panel de control
+- actualizar README
