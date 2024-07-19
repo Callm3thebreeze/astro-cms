@@ -1,4 +1,3 @@
-import React from "react";
 import BlockItem from "./BlockItem";
 
 const BlockList = ({ blocks, handleEdit, handleDelete }) => {

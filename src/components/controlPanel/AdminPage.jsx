@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Form from "./Form";
+import Form from "./infoblockForm/Form";
 import BlockList from "./BlockList";
 import {
   handleInputChange,
@@ -7,7 +7,7 @@ import {
   handleDelete,
   handleEdit,
   fetchBlocks,
-} from "../utils/handlers";
+} from "@utils/handlers";
 import { storage, databases, ID } from "@lib/appwrite";
 
 const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
