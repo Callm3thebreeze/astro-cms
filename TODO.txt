@@ -1,4 +1,2 @@
-- Gestionar el tamaño de las imágenes subidas
-- Actualizar datos al aliminar elementos del panel de control
 - Replicar al apariencia del componente en la apariencia de los elementos creados en el panel de control
-- refactorizar handlers y forms
+- refactorizar handlers

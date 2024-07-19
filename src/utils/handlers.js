@@ -69,6 +69,74 @@ const saveContentToFile = async (head, blocks) => {
   }
 };
 
+const updateContentFile = async (updatedBlocks) => {
+  const head = updatedBlocks.length > 0 ? updatedBlocks[0] : {};
+  const blocks = updatedBlocks.slice(1).map((block) => ({
+    ...block,
+    titleClass: block.titleSize,
+    image: {
+      class: block.imagePosition,
+      picClass: block.imageStyle,
+      src: block.imageSrc,
+      alt: block.imageAlt,
+    },
+    links: [
+      {
+        href: block.button1Href,
+        style: block.button1Style,
+        icon: {
+          name: block.button1Icon,
+          class: block.button1IconStyle,
+        },
+        text: block.button1Text,
+      },
+      {
+        href: block.button2Href,
+        style: block.button2Style,
+        icon: {
+          name: block.button2Icon,
+          class: block.button2IconStyle,
+        },
+        text: block.button2Text,
+      },
+    ].filter((link) => link.text),
+  }));
+
+  await saveContentToFile(
+    {
+      ...head,
+      titleClass: head.titleSize,
+      image: {
+        class: head.imagePosition,
+        picClass: head.imageStyle,
+        src: head.imageSrc,
+        alt: head.imageAlt,
+      },
+      links: [
+        {
+          href: head.button1Href,
+          style: head.button1Style,
+          icon: {
+            name: head.button1Icon,
+            class: head.button1IconStyle,
+          },
+          text: head.button1Text,
+        },
+        {
+          href: head.button2Href,
+          style: head.button2Style,
+          icon: {
+            name: head.button2Icon,
+            class: head.button2IconStyle,
+          },
+          text: head.button2Text,
+        },
+      ].filter((link) => link.text),
+    },
+    blocks,
+  );
+};
+
 export const handleSave = async (
   e,
   form,
@@ -139,71 +207,7 @@ export const handleSave = async (
       id: doc.$id,
     }));
 
-    const head = updatedBlocks.length > 0 ? updatedBlocks[0] : {};
-    const blocks = updatedBlocks.slice(1).map((block, index) => ({
-      ...block,
-      titleClass: block.titleSize,
-      image: {
-        class: block.imagePosition,
-        picClass: block.imageStyle,
-        src: block.imageSrc,
-        alt: block.imageAlt,
-      },
-      links: [
-        {
-          href: block.button1Href,
-          style: block.button1Style,
-          icon: {
-            name: block.button1Icon,
-            class: block.button1IconStyle,
-          },
-          text: block.button1Text,
-        },
-        {
-          href: block.button2Href,
-          style: block.button2Style,
-          icon: {
-            name: block.button2Icon,
-            class: block.button2IconStyle,
-          },
-          text: block.button2Text,
-        },
-      ].filter((link) => link.text),
-    }));
-
-    await saveContentToFile(
-      {
-        ...head,
-        titleClass: head.titleSize,
-        image: {
-          class: head.imagePosition,
-          picClass: head.imageStyle,
-          src: head.imageSrc,
-          alt: head.imageAlt,
-        },
-        links: [
-          {
-            href: head.button1Href,
-            style: head.button1Style,
-            icon: {
-              name: head.button1Icon,
-              class: head.button1IconStyle,
-            },
-            text: head.button1Text,
-          },
-          {
-            href: head.button2Href,
-            style: head.button2Style,
-            icon: {
-              name: head.button2Icon,
-              class: head.button2IconStyle,
-            },
-            text: head.button2Text,
-          },
-        ].filter((link) => link.text),
-      },
-      blocks,
-    );
+    await updateContentFile(updatedBlocks);
 
     setBlocks(updatedBlocks);
 
@@ -252,7 +256,11 @@ export const handleDelete = async (
     if (block.imageFileId) {
       await storage.deleteFile(BUCKET_ID, block.imageFileId);
     }
-    setBlocks((prevBlocks) => prevBlocks.filter((_, i) => i !== index));
+    setBlocks(async (prevBlocks) => {
+      const updatedBlocks = prevBlocks.filter((_, i) => i !== index);
+      await updateContentFile(updatedBlocks); // Llama a la API después de actualizar los bloques
+      return updatedBlocks;
+    });
   } catch (error) {
     console.error("Error deleting document:", error);
   }
