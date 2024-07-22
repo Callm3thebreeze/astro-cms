@@ -3,13 +3,15 @@ import Form from "./infoblockForm/Form";
 import BlockList from "./BlockList";
 import {
   handleInputChange,
+  handleImageSizeChange,
+  handleImageStyleChange,
+} from "@utils/formHandlers";
+import {
   handleSave,
   handleDelete,
   handleEdit,
   fetchBlocks,
-  handleImageSizeChange,
-  handleImageStyleChange,
-} from "@utils/handlers";
+} from "@utils/infoBlockHandlers";
 import { storage, ID } from "@lib/appwrite";
 
 const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
