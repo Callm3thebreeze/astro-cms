@@ -47,7 +47,7 @@ const TextFields = ({ form, handleInputChange, titleSizeOptions }) => (
           id="content"
           value={form.content}
           onChange={handleInputChange}
-          className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+          className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md resize-none min-h-[8rem] max-h-[12rem]"
         />
       </div>
     </div>
