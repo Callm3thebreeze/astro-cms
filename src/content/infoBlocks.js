@@ -54,5 +54,42 @@
     }
   ]
 };
-    export const blocks = [];
+    export const blocks = [
+  {
+    "title": "ACHOOOOO",
+    "content": "",
+    "imagePosition": "md:order-first flex justify-center",
+    "imageStyle": "flex justify-center w-full",
+    "imageSrc": "https://cloud.appwrite.io/v1/storage/buckets/6698bb3e002e5c02d472/files/669f91c8000d3bf744ce/download?project=668284e100298747d576",
+    "imageAlt": "",
+    "button1Text": "",
+    "button1Href": "",
+    "button1Style": "primary",
+    "button1Icon": "",
+    "button1IconStyle": "",
+    "button2Text": "",
+    "button2Href": "",
+    "button2Style": "primary",
+    "button2Icon": "",
+    "button2IconStyle": "",
+    "titleSize": "text-4xl font-bold lg:tracking-tight",
+    "imageFileId": "669f91c8000d3bf744ce",
+    "$id": "669f91ca0011a3341888",
+    "$tenant": "160535",
+    "$createdAt": "2024-07-23T11:19:38.372+00:00",
+    "$updatedAt": "2024-07-23T11:19:38.372+00:00",
+    "$permissions": [],
+    "$databaseId": "668e6f59001d39d0b13c",
+    "$collectionId": "668e6f6b0020704681cc",
+    "id": "669f91ca0011a3341888",
+    "titleClass": "text-4xl font-bold lg:tracking-tight",
+    "image": {
+      "class": "md:order-first flex justify-center",
+      "picClass": "flex justify-center w-full",
+      "src": "https://cloud.appwrite.io/v1/storage/buckets/6698bb3e002e5c02d472/files/669f91c8000d3bf744ce/download?project=668284e100298747d576",
+      "alt": ""
+    },
+    "links": []
+  }
+];
   
