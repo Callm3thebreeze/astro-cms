@@ -1,5 +1,5 @@
 import { databases, storage, ID } from "@lib/appwrite";
-import { updateContentFile } from "./fileContentHandlers";
+import { updateContentFile } from "./infoBlocksContentHandlers";
 
 export const fetchBlocks = async (DATABASE_ID, COLLECTION_ID, setBlocks) => {
   try {

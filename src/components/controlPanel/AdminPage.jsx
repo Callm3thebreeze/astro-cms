@@ -11,7 +11,7 @@ import {
   handleDelete,
   handleEdit,
   fetchBlocks,
-} from "@utils/infoBlockHandlers";
+} from "@utils/dbInfoBlockHandlers";
 import { storage, ID } from "@lib/appwrite";
 
 const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {

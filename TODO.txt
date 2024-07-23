@@ -1,5 +1,6 @@
+- Evitar refresco de página al editar bloques desde el panel de control
+- arreglar alineado de imagenes en index
 - Replicar al apariencia del componente en la apariencia de los elementos creados en el panel de control
-- refactorizar handlers
 - añadir notas d informativas en los campos del formulario que lo necesiten
 - idear un sistema de reorganización de bloques por drag & drop
 - Ampliar el panel de control para poder navegar entre la edición de los bloques de info, el navbar, las features, el bloque de logos y el cta

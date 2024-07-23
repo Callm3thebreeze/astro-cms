@@ -22,14 +22,14 @@ const Form = ({
 
   const imageClassOptions = {
     Color: "flex justify-center",
-    "Black & White": "filter grayscale",
+    "Black & White": "filter grayscale flex justify-center",
     Transition:
       "transition-all duration-500 filter grayscale hover:grayscale-0 flex justify-center",
   };
 
   const imagePositionOptions = {
-    right: "md:order-1 md:flex",
-    left: "md:order-first md:flex",
+    right: "md:order-1 flex justify-center",
+    left: "md:order-first flex justify-center",
   };
 
   const imageSizeOptions = {
