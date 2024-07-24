@@ -1,5 +1,4 @@
 ---
-import { Picture } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import Link from "@components/ui/link.astro";
 
@@ -38,14 +37,10 @@ const { content } = Astro.props;
   {
     content.image.src && (
       <div class={content.image.class}>
-        <Picture
+        <img
           class={content.image.picClass}
           src={content.image.src}
           alt={content.image.alt}
-          width="250"
-          height="300"
-          loading="eager"
-          format="avif"
         />
       </div>
     )

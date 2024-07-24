@@ -21,10 +21,10 @@ const Form = ({
   };
 
   const imageClassOptions = {
-    Color: "flex justify-center",
-    "Black & White": "filter grayscale flex justify-center",
+    Color: "rounded-md",
+    "Black & White": "filter grayscale  rounded-md",
     Transition:
-      "transition-all duration-500 filter grayscale hover:grayscale-0 flex justify-center",
+      "transition-all duration-500 filter grayscale hover:grayscale-0 rounded-md",
   };
 
   const imagePositionOptions = {

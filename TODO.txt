@@ -1,3 +1,5 @@
+- Invesrtigar de donde proviene el refresco de la página al editar crear o eliminar bloques
+- hacer que cree infoBlocks.js si este no existe
 - Evitar refresco de página al editar bloques desde el panel de control
 - arreglar alineado de imagenes en index
 - Replicar al apariencia del componente en la apariencia de los elementos creados en el panel de control

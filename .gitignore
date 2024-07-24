@@ -27,6 +27,7 @@ pnpm-debug.log*
 .idea/
 
 # DB content
-src/content/
+src/content/*
 
 !src/content/demo.js
+!src/content/features.js
