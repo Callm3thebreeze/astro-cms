@@ -1,37 +1,35 @@
+const updateFormState = (setForm, key, value) => {
+  setForm((prevForm) => ({
+    ...prevForm,
+    [key]: value,
+  }));
+};
+
+const updateImageStyle = (setForm, filterFn, newValue) => {
+  setForm((prevForm) => {
+    const newImageStyle =
+      prevForm.imageStyle.split(" ").filter(filterFn).join(" ") +
+      ` ${newValue}`;
+
+    return {
+      ...prevForm,
+      imageStyle: newImageStyle,
+    };
+  });
+};
+
 export const handleInputChange = (e, setForm) => {
   const { name, value } = e.target;
-  setForm((prevForm) => ({ ...prevForm, [name]: value }));
+  updateFormState(setForm, name, value);
 };
 
 export const handleImageSizeChange = (e, setForm) => {
   const { value } = e.target;
-  setForm((prevForm) => {
-    const newImageStyle =
-      prevForm.imageStyle
-        .split(" ")
-        .filter((cls) => !cls.startsWith("w-"))
-        .join(" ") + ` ${value}`;
-
-    return {
-      ...prevForm,
-      imageSize: value,
-      imageStyle: newImageStyle,
-    };
-  });
+  updateFormState(setForm, "imageSize", value);
+  updateImageStyle(setForm, (cls) => !cls.startsWith("w-"), value);
 };
 
 export const handleImageStyleChange = (e, setForm) => {
   const { value } = e.target;
-  setForm((prevForm) => {
-    const newImageStyle =
-      prevForm.imageStyle
-        .split(" ")
-        .filter((cls) => cls.startsWith("w-"))
-        .join(" ") + ` ${value}`;
-
-    return {
-      ...prevForm,
-      imageStyle: newImageStyle,
-    };
-  });
+  updateImageStyle(setForm, (cls) => cls.startsWith("w-"), value);
 };
