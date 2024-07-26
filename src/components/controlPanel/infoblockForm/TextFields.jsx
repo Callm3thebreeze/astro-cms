@@ -2,11 +2,21 @@ const TextFields = ({ form, handleInputChange, titleSizeOptions }) => (
   <div className="md:col-span-1 bg-gray-100 rounded-md p-4">
     <legend className="text-lg font-bold text-gray-900 mb-4">Texto</legend>
     <div className="space-y-4">
-      <div>
+      <div className="relative">
         <label
           htmlFor="title"
-          className="block text-sm font-medium text-gray-700">
+          className="block text-sm font-medium text-gray-700 flex items-center">
           Título
+          <i
+            data-tooltip-target="tooltip-title"
+            className="ml-2 fas fa-info-circle text-gray-400 hover:text-gray-600 cursor-pointer"></i>
+          <div
+            id="tooltip-title"
+            role="tooltip"
+            className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            Título del contenido
+            <div className="tooltip-arrow" data-popper-arrow></div>
+          </div>
         </label>
         <input
           type="text"
@@ -17,11 +27,21 @@ const TextFields = ({ form, handleInputChange, titleSizeOptions }) => (
           className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
         />
       </div>
-      <div>
+      <div className="relative">
         <label
           htmlFor="titleSize"
-          className="block text-sm font-medium text-gray-700">
+          className="block text-sm font-medium text-gray-700 flex items-center">
           Tamaño del título
+          <i
+            data-tooltip-target="tooltip-titleSize"
+            className="ml-2 fas fa-info-circle text-gray-400 hover:text-gray-600 cursor-pointer"></i>
+          <div
+            id="tooltip-titleSize"
+            role="tooltip"
+            className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            Selecciona el tamaño del título
+            <div className="tooltip-arrow" data-popper-arrow></div>
+          </div>
         </label>
         <select
           name="titleSize"
@@ -36,11 +56,21 @@ const TextFields = ({ form, handleInputChange, titleSizeOptions }) => (
           ))}
         </select>
       </div>
-      <div>
+      <div className="relative">
         <label
           htmlFor="content"
-          className="block text-sm font-medium text-gray-700">
+          className="block text-sm font-medium text-gray-700 flex items-center">
           Contenido
+          <i
+            data-tooltip-target="tooltip-content"
+            className="ml-2 fas fa-info-circle text-gray-400 hover:text-gray-600 cursor-pointer"></i>
+          <div
+            id="tooltip-content"
+            role="tooltip"
+            className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            Contenido del bloque de texto
+            <div className="tooltip-arrow" data-popper-arrow></div>
+          </div>
         </label>
         <textarea
           name="content"

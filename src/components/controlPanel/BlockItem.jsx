@@ -1,5 +1,3 @@
-import React from "react";
-
 const BlockItem = ({ block, handleEdit, handleDelete }) => {
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
@@ -18,18 +16,24 @@ const BlockItem = ({ block, handleEdit, handleDelete }) => {
           </p>
           <div className="mt-2 flex flex-col sm:flex-row gap-2">
             {block.button1Text && (
-              <a href={block.button1Href} className={block.button1Style}>
+              <a
+                href={block.button1Href}
+                className={block.button1Style + " p-2 rounded-lg"}>
                 {block.button1Icon && (
                   <i className={block.button1IconStyle}>{block.button1Icon}</i>
                 )}
+                &nbsp;
                 {block.button1Text}
               </a>
             )}
             {block.button2Text && (
-              <a href={block.button2Href} className={block.button2Style}>
+              <a
+                href={block.button2Href}
+                className={block.button2Style + " p-2 rounded-lg"}>
                 {block.button2Icon && (
                   <i className={block.button2IconStyle}>{block.button2Icon}</i>
                 )}
+                &nbsp;
                 {block.button2Text}
               </a>
             )}
