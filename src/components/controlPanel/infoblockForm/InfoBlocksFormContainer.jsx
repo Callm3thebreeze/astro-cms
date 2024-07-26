@@ -81,11 +81,13 @@ const InfoBlocksFormContainer = ({
         iconStyles={iconStyles}
       />
       <div className="md:col-span-2">
-        <button
-          type="submit"
-          className="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-          Guardar Elemento
-        </button>
+        <div className="md:col-span-2 flex justify-end">
+          <button
+            type="submit"
+            className="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+            Guardar Elemento
+          </button>
+        </div>
       </div>
     </form>
   );

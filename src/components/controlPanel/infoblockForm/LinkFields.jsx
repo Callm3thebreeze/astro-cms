@@ -68,12 +68,12 @@ const LinkFields = ({
               className="block text-sm font-medium text-gray-700">
               Icono del botón 1
             </label>
-            <p className="text-sm font-medium font-small text-sky-600">
+            <p className="text-sm font-medium font-small text-blue-600">
               Seleccionar icono de la galería y pegar su nombre detrás de "bx:"
               ej: "bx:bxl-whatsapp"
             </p>
             <a
-              className="text-sm font-medium font-small text-sky-600 underline"
+              className="text-sm font-medium font-small text-blue-600 underline"
               href="https://icon-sets.iconify.design/bxl/?commercial=true">
               Galería de iconos
             </a>
@@ -105,16 +105,18 @@ const LinkFields = ({
               ))}
             </select>
           </div>
-          <button
-            type="button"
-            onClick={() => setShowLink1(false)}
-            className="mt-2 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-            Ocultar Enlace 1
-          </button>
+          <div className="col-span-2">
+            <button
+              type="button"
+              onClick={() => setShowLink1(false)}
+              className="mt-2 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+              Ocultar Botón 1
+            </button>
+          </div>
         </div>
       )}
       {showLink2 && (
-        <div className="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0 mb-4">
+        <div className="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
           <div>
             <label
               htmlFor="button2Text"
@@ -170,12 +172,12 @@ const LinkFields = ({
               className="block text-sm font-medium text-gray-700">
               Icono del botón 2
             </label>
-            <p className="text-sm font-medium font-small text-sky-600">
+            <p className="text-sm font-medium font-small text-blue-600">
               Seleccionar icono de la galería y pegar su nombre detrás de "bx:"
               ej: "bx:bxl-whatsapp"
             </p>
             <a
-              className="text-sm font-medium font-small text-sky-600 underline"
+              className="text-sm font-medium font-small text-blue-600 underline"
               href="https://icon-sets.iconify.design/bxl/?commercial=true">
               Galería de iconos
             </a>
@@ -207,12 +209,14 @@ const LinkFields = ({
               ))}
             </select>
           </div>
-          <button
-            type="button"
-            onClick={() => setShowLink2(false)}
-            className="mt-2 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-            Ocultar Enlace 2
-          </button>
+          <div className="col-span-2 flex">
+            <button
+              type="button"
+              onClick={() => setShowLink2(false)}
+              className="mt-2 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+              Ocultar Botón 2
+            </button>
+          </div>
         </div>
       )}
       {!showLink1 && (
