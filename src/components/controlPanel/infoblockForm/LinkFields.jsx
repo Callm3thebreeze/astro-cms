@@ -68,6 +68,15 @@ const LinkFields = ({
               className="block text-sm font-medium text-gray-700">
               Icono del botón 1
             </label>
+            <p className="text-sm font-medium font-small text-sky-600">
+              Seleccionar icono de la galería y pegar su nombre detrás de "bx:"
+              ej: "bx:bxl-whatsapp"
+            </p>
+            <a
+              className="text-sm font-medium font-small text-sky-600 underline"
+              href="https://icon-sets.iconify.design/bxl/?commercial=true">
+              Galería de iconos
+            </a>
             <input
               type="text"
               name="button1Icon"
@@ -161,6 +170,15 @@ const LinkFields = ({
               className="block text-sm font-medium text-gray-700">
               Icono del botón 2
             </label>
+            <p className="text-sm font-medium font-small text-sky-600">
+              Seleccionar icono de la galería y pegar su nombre detrás de "bx:"
+              ej: "bx:bxl-whatsapp"
+            </p>
+            <a
+              className="text-sm font-medium font-small text-sky-600 underline"
+              href="https://icon-sets.iconify.design/bxl/?commercial=true">
+              Galería de iconos
+            </a>
             <input
               type="text"
               name="button2Icon"
@@ -202,7 +220,7 @@ const LinkFields = ({
           type="button"
           onClick={() => setShowLink1(true)}
           className="mt-2 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-          Añadir Enlace 1
+          Añadir Botón 1
         </button>
       )}
       {showLink1 && !showLink2 && (
@@ -210,7 +228,7 @@ const LinkFields = ({
           type="button"
           onClick={() => setShowLink2(true)}
           className="mt-2 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-          Añadir Enlace 2
+          Añadir Botón 2
         </button>
       )}
     </fieldset>

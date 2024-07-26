@@ -13,11 +13,21 @@ const ImageFields = ({
       <div className="md:col-span-1 bg-gray-100 rounded-md p-4">
         <legend className="text-lg font-bold text-gray-900 mb-4">Imagen</legend>
         <div className="space-y-4">
-          <div>
+          <div className="relative group">
             <label
               htmlFor="imageStyle"
-              className="block text-sm font-medium text-gray-700">
+              className="block text-sm font-medium text-gray-700 flex items-center">
               Estilo de imagen
+              <i
+                data-tooltip-target="tooltip-imageStyle"
+                className="ml-2 fas fa-info-circle text-gray-400 hover:text-gray-600 cursor-pointer group-hover:visible group-focus:visible"></i>
+              <div
+                id="tooltip-imageStyle"
+                role="tooltip"
+                className="absolute z-10 invisible group-hover:visible group-focus:visible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                Filtro de color de la imagen, color, blanco y negro o transición
+                de blanco y negro a color.
+              </div>
             </label>
             <select
               name="imageStyle"
@@ -33,10 +43,10 @@ const ImageFields = ({
               ))}
             </select>
           </div>
-          <div>
+          <div className="relative group">
             <label
               htmlFor="imagePosition"
-              className="block text-sm font-medium text-gray-700">
+              className="block text-sm font-medium text-gray-700 flex items-center">
               Posición de imagen
             </label>
             <select
@@ -53,10 +63,10 @@ const ImageFields = ({
               ))}
             </select>
           </div>
-          <div>
+          <div className="relative group">
             <label
               htmlFor="imageSize"
-              className="block text-sm font-medium text-gray-700">
+              className="block text-sm font-medium text-gray-700 flex items-center">
               Tamaño de la imagen
             </label>
             <select
@@ -73,11 +83,21 @@ const ImageFields = ({
               ))}
             </select>
           </div>
-          <div>
+          <div className="relative group">
             <label
               htmlFor="imageSrc"
-              className="block text-sm font-medium text-gray-700">
+              className="block text-sm font-medium text-gray-700 flex items-center">
               URL de la imagen
+              <i
+                data-tooltip-target="tooltip-imageSrc"
+                className="ml-2 fas fa-info-circle text-gray-400 hover:text-gray-600 cursor-pointer group-hover:visible group-focus:visible"></i>
+              <div
+                id="tooltip-imageSrc"
+                role="tooltip"
+                className="absolute z-10 invisible group-hover:visible group-focus:visible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                Para imágenes sacadas de internet, copia y pega la URL de la
+                misma.
+              </div>
             </label>
             <input
               type="text"
@@ -88,11 +108,20 @@ const ImageFields = ({
               className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
             />
           </div>
-          <div>
+          <div className="relative group">
             <label
               htmlFor="imageFile"
-              className="block text-sm font-medium text-gray-700">
+              className="block text-sm font-medium text-gray-700 flex items-center">
               Subir Imagen
+              <i
+                data-tooltip-target="tooltip-imageFile"
+                className="ml-2 fas fa-info-circle text-gray-400 hover:text-gray-600 cursor-pointer group-hover:visible group-focus:visible"></i>
+              <div
+                id="tooltip-imageFile"
+                role="tooltip"
+                className="absolute z-10 invisible group-hover:visible group-focus:visible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                Sube una imagen desde tu dispositivo.
+              </div>
             </label>
             <input
               type="file"
@@ -102,11 +131,21 @@ const ImageFields = ({
               className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
             />
           </div>
-          <div>
+          <div className="relative group">
             <label
               htmlFor="imageAlt"
-              className="block text-sm font-medium text-gray-700">
+              className="block text-sm font-medium text-gray-700 flex items-center">
               Alt de la imagen
+              <i
+                data-tooltip-target="tooltip-imageAlt"
+                className="ml-2 fas fa-info-circle text-gray-400 hover:text-gray-600 cursor-pointer group-hover:visible group-focus:visible"></i>
+              <div
+                id="tooltip-imageAlt"
+                role="tooltip"
+                className="absolute z-10 invisible group-hover:visible group-focus:visible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                Introduce un texto descriptivo de la imagen para personas con
+                discapacidad visual.
+              </div>
             </label>
             <input
               type="text"
