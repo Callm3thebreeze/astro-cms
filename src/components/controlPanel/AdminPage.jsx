@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Form from "./infoblockForm/Form";
+import InfoBlocksFormContainer from "./infoBlockForm/InfoBlocksFormContainer";
 import BlockList from "./BlockList";
 import {
   handleInputChange,
@@ -69,7 +69,7 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
   return (
     <main className="container mx-auto py-8">
       <h1 className="text-2xl font-bold mb-6">Panel de Control</h1>
-      <Form
+      <InfoBlocksFormContainer
         form={form}
         setForm={setForm}
         handleInputChange={handleInputChange}

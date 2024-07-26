@@ -2,7 +2,7 @@ import TextFields from "./TextFields";
 import ImageFields from "./ImageFields";
 import LinkFields from "./LinkFields";
 
-const Form = ({
+const InfoBlocksFormContainer = ({
   form,
   setForm,
   handleInputChange,
@@ -91,4 +91,4 @@ const Form = ({
   );
 };
 
-export default Form;
+export default InfoBlocksFormContainer;
