@@ -2,7 +2,6 @@ import { writeFile } from "fs/promises";
 import { join } from "path";
 
 export async function POST({ request }) {
-  console.log(request);
   const data = await request.json();
   const filePath = join(process.cwd(), "src", "content", "infoBlocks.js");
 
