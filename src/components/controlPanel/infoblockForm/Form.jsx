@@ -16,38 +16,38 @@ const Form = ({
   handleImageStyleChange,
 }) => {
   const titleSizeOptions = {
-    small: "text-4xl font-bold lg:tracking-tight",
-    big: "text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight",
+    Pequeño: "text-4xl font-bold lg:tracking-tight",
+    Grande: "text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight",
   };
 
   const imageClassOptions = {
     Color: "rounded-md",
-    "Black & White": "filter grayscale  rounded-md",
-    Transition:
+    "Blanco y negro": "filter grayscale  rounded-md",
+    Transición:
       "transition-all duration-500 filter grayscale hover:grayscale-0 rounded-md",
   };
 
   const imagePositionOptions = {
-    right: "md:order-1 flex justify-center",
-    left: "md:order-first flex justify-center",
+    Derecha: "md:order-1 flex justify-center",
+    Izquierda: "md:order-first flex justify-center",
   };
 
   const imageSizeOptions = {
-    small: "w-2/4",
-    medium: "w-3/4",
-    big: "w-full",
+    Pequeña: "w-2/4",
+    Mediana: "w-3/4",
+    Grande: "w-full",
   };
 
   const buttonStyles = {
-    primary: "primary",
-    outline: "outline",
-    inverted: "inverted",
-    muted: "muted",
+    Negro: "primary",
+    "Blanco con borde negro": "outline",
+    Blanco: "inverted",
+    Gris: "muted",
   };
 
   const iconStyles = {
-    white: "text-white w-5 h-5",
-    black: "text-black w-5 h-5",
+    Blanco: "text-white w-5 h-5",
+    Negro: "text-black w-5 h-5",
   };
 
   return (
