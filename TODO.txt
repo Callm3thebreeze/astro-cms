@@ -1,10 +1,9 @@
+- Refactorizar handlers y AdminPage
 - Invesrtigar de donde proviene el refresco de la página al editar crear o eliminar bloques
 - hacer que cree infoBlocks.js si este no existe
 - Evitar refresco de página al editar bloques desde el panel de control
 - Replicar al apariencia del componente en la apariencia de los elementos creados en el panel de control
-- añadir notas d informativas en los campos del formulario que lo necesiten
 - idear un sistema de reorganización de bloques por drag & drop
-- Ampliar el panel de control para poder navegar entre la edición de los bloques de info, el navbar, las features, el bloque de logos y el cta
 - desarrollar panel de control del navbar
 - desarrollar panel de control de las features
 - desarrollar panel de control del bloque de logos
