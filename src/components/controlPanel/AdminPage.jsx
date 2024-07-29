@@ -17,7 +17,7 @@ import { storage, ID } from "@lib/appwrite";
 
 const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
   const [blocks, setBlocks] = useState([]);
-  const [form, setForm] = useState({
+  const [infoBlockForm, setInfoBlockForm] = useState({
     title: "",
     content: "",
     titleSize: "text-4xl font-bold lg:tracking-tight",
@@ -38,6 +38,11 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
     button2IconStyle: "",
     id: null,
   });
+  const [featuresForm, setFeaturesForm] = useState({
+    featureTitle: "",
+    featureSubtitle: "",
+    items: [{ title: "", description: "", icon: "" }],
+  });
   const [showLink1, setShowLink1] = useState(false);
   const [showLink2, setShowLink2] = useState(false);
   const [selectedForm, setSelectedForm] = useState("infoBlocks");
@@ -48,7 +53,14 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
 
   const handleFormSave = (e) => {
     console.log("Saving form...");
-    handleSave(e, form, setForm, setBlocks, DATABASE_ID, COLLECTION_ID);
+    handleSave(
+      e,
+      infoBlockForm,
+      setInfoBlockForm,
+      setBlocks,
+      DATABASE_ID,
+      COLLECTION_ID,
+    );
   };
 
   const handleFileChange = async (e, setForm) => {
@@ -73,8 +85,8 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
       case "infoBlocks":
         return (
           <InfoBlocksFormContainer
-            form={form}
-            setForm={setForm}
+            form={infoBlockForm}
+            setForm={setInfoBlockForm}
             handleInputChange={handleInputChange}
             handleSave={handleFormSave}
             showLink1={showLink1}
@@ -89,17 +101,10 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
       case "features":
         return (
           <FeaturesFormContainer
-            form={form}
-            setForm={setForm}
+            form={featuresForm}
+            setForm={setFeaturesForm}
             handleInputChange={handleInputChange}
             handleSave={handleFormSave}
-            showLink1={showLink1}
-            showLink2={showLink2}
-            setShowLink1={setShowLink1}
-            setShowLink2={setShowLink2}
-            handleFileChange={handleFileChange}
-            handleImageSizeChange={handleImageSizeChange}
-            handleImageStyleChange={handleImageStyleChange}
           />
         );
       default:
@@ -148,7 +153,7 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
         {renderForm()}
         <BlockList
           blocks={blocks}
-          handleEdit={(index) => handleEdit(index, blocks, setForm)}
+          handleEdit={(index) => handleEdit(index, blocks, setInfoBlockForm)}
           handleDelete={(index) =>
             handleDelete(
               index,

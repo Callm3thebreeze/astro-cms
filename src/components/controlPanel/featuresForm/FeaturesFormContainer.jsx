@@ -1,45 +1,145 @@
+import { useState } from "react";
+
 const FeaturesFormContainer = ({
   form,
   setForm,
   handleInputChange,
   handleSave,
-  showLink1,
-  showLink2,
-  setShowLink1,
-  setShowLink2,
-  handleFileChange,
-  handleImageSizeChange,
-  handleImageStyleChange,
-}) => (
-  <div>
-    <h2 className="text-xl font-bold mb-4">Formulario de Features</h2>
-    <form onSubmit={handleSave}>
-      {/* Add your form fields here similar to InfoBlocksFormContainer */}
-      <div className="space-y-4">
-        <div>
-          <label
-            htmlFor="featureTitle"
-            className="block text-sm font-medium text-gray-700">
-            Título de la característica
-          </label>
-          <input
-            type="text"
-            name="featureTitle"
-            id="featureTitle"
-            value={form.featureTitle || ""}
-            onChange={handleInputChange}
-            className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-          />
+}) => {
+  const [items, setItems] = useState([
+    { title: "", description: "", icon: "" },
+  ]);
+
+  const handleItemChange = (index, e) => {
+    const { name, value } = e.target;
+    const updatedItems = items.map((item, i) =>
+      i === index ? { ...item, [name]: value } : item,
+    );
+    setItems(updatedItems);
+  };
+
+  const handleAddItem = () => {
+    if (items.length < 6) {
+      setItems([...items, { title: "", description: "", icon: "" }]);
+    }
+  };
+
+  const handleRemoveItem = (index) => {
+    const updatedItems = items.filter((_, i) => i !== index);
+    setItems(updatedItems);
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleSave}>
+        <div className="space-y-4 md:col-span-1 bg-gray-100 rounded-md p-4">
+          <legend className="text-lg font-bold text-gray-900 mb-4">
+            Features
+          </legend>
+          <div>
+            <label
+              htmlFor="featureTitle"
+              className="block text-sm font-medium text-gray-700">
+              Título
+            </label>
+            <input
+              type="text"
+              name="featureTitle"
+              id="featureTitle"
+              value={form.featureTitle || ""}
+              onChange={(e) => handleInputChange(e, setForm)}
+              className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="featureSubtitle"
+              className="block text-sm font-medium text-gray-700">
+              Subtítulo
+            </label>
+            <textarea
+              name="featureSubtitle"
+              id="featureSubtitle"
+              value={form.featureSubtitle || ""}
+              onChange={(e) => handleInputChange(e, setForm)}
+              className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md resize-none min-h-[8rem] max-h-[12rem]"></textarea>
+          </div>
+
+          {items.map((item, index) => (
+            <div key={index} className="space-y-4 border-b pb-4">
+              <div>
+                <label
+                  htmlFor={`item-title-${index}`}
+                  className="block text-sm font-medium text-gray-700">
+                  Título del Item
+                </label>
+                <input
+                  type="text"
+                  name="title"
+                  id={`item-title-${index}`}
+                  value={item.title}
+                  onChange={(e) => handleItemChange(index, e)}
+                  className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor={`item-description-${index}`}
+                  className="block text-sm font-medium text-gray-700">
+                  Descripción del Item
+                </label>
+                <textarea
+                  name="description"
+                  id={`item-description-${index}`}
+                  value={item.description}
+                  onChange={(e) => handleItemChange(index, e)}
+                  className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md resize-none"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor={`item-icon-${index}`}
+                  className="block text-sm font-medium text-gray-700">
+                  Icono del Item
+                </label>
+                <input
+                  type="text"
+                  name="icon"
+                  id={`item-icon-${index}`}
+                  value={item.icon}
+                  onChange={(e) => handleItemChange(index, e)}
+                  className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                />
+              </div>
+              <button
+                type="button"
+                onClick={() => handleRemoveItem(index)}
+                className="mt-2 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                Eliminar Item
+              </button>
+            </div>
+          ))}
+
+          {items.length < 6 && (
+            <button
+              type="button"
+              onClick={handleAddItem}
+              className="mt-2 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+              Añadir Item
+            </button>
+          )}
+
+          <div className="md:col-span-2 flex justify-end">
+            <button
+              type="submit"
+              className="mt-4 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+              Guardar
+            </button>
+          </div>
         </div>
-        {/* Add more fields as needed */}
-        <button
-          type="submit"
-          className="mt-4 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-          Guardar
-        </button>
-      </div>
-    </form>
-  </div>
-);
+      </form>
+    </div>
+  );
+};
 
 export default FeaturesFormContainer;
