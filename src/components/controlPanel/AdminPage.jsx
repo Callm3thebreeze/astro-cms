@@ -38,11 +38,13 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
     button2IconStyle: "",
     id: null,
   });
+
   const [featuresForm, setFeaturesForm] = useState({
     featureTitle: "",
     featureSubtitle: "",
     items: [{ title: "", description: "", icon: "" }],
   });
+
   const [showLink1, setShowLink1] = useState(false);
   const [showLink2, setShowLink2] = useState(false);
   const [selectedForm, setSelectedForm] = useState("infoBlocks");
@@ -52,15 +54,21 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
   }, [DATABASE_ID, COLLECTION_ID]);
 
   const handleFormSave = (e) => {
+    e.preventDefault();
     console.log("Saving form...");
-    handleSave(
-      e,
-      infoBlockForm,
-      setInfoBlockForm,
-      setBlocks,
-      DATABASE_ID,
-      COLLECTION_ID,
-    );
+    if (selectedForm === "infoBlocks") {
+      handleSave(
+        e,
+        infoBlockForm,
+        setInfoBlockForm,
+        setBlocks,
+        DATABASE_ID,
+        COLLECTION_ID,
+      );
+    } else {
+      console.log("Features form data:", featuresForm);
+      // Aquí puedes agregar la lógica para guardar featuresForm
+    }
   };
 
   const handleFileChange = async (e, setForm) => {
@@ -119,7 +127,11 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
           <li>
             <button
               onClick={() => setSelectedForm("infoBlocks")}
-              className={`inline-flex items-center px-4 py-3 w-full rounded-lg ${selectedForm === "infoBlocks" ? "bg-blue-700 text-white dark:bg-blue-600" : "bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"}`}>
+              className={`inline-flex items-center px-4 py-3 w-full rounded-lg ${
+                selectedForm === "infoBlocks"
+                  ? "bg-blue-700 text-white dark:bg-blue-600"
+                  : "bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
+              }`}>
               <svg
                 className="w-4 h-4 me-2"
                 aria-hidden="true"
@@ -134,7 +146,11 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
           <li>
             <button
               onClick={() => setSelectedForm("features")}
-              className={`inline-flex items-center px-4 py-3 w-full rounded-lg ${selectedForm === "features" ? "bg-blue-700 text-white dark:bg-blue-600" : "bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"}`}>
+              className={`inline-flex items-center px-4 py-3 w-full rounded-lg ${
+                selectedForm === "features"
+                  ? "bg-blue-700 text-white dark:bg-blue-600"
+                  : "bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
+              }`}>
               <svg
                 className="w-4 h-4 me-2"
                 aria-hidden="true"
