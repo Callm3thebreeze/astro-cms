@@ -164,10 +164,53 @@ export const handleDelete = async (
   }
 };
 
-export const handleEdit = (index, blocks, setForm) => {
+export const handleEditInfoBlock = (index, blocks, setForm) => {
   const block = blocks[index];
   console.log(`Editing document with ID: ${block.id}`);
   setForm(block);
+};
+
+export const handleEditFeature = (index, blocks, setFeaturesForm) => {
+  const block = blocks[index];
+  console.log(`Editing feature document with ID: ${block.id}`);
+
+  setFeaturesForm({
+    featureTitle: block.title,
+    featureSubtitle: block.subtitle,
+    items: [
+      {
+        title: block.item1title,
+        description: block.item1description,
+        icon: block.item1icon,
+      },
+      {
+        title: block.item2title,
+        description: block.item2description,
+        icon: block.item2icon,
+      },
+      {
+        title: block.item3title,
+        description: block.item3description,
+        icon: block.item3icon,
+      },
+      {
+        title: block.item4title,
+        description: block.item4description,
+        icon: block.item4icon,
+      },
+      {
+        title: block.item5title,
+        description: block.item5description,
+        icon: block.item5icon,
+      },
+      {
+        title: block.item6title,
+        description: block.item6description,
+        icon: block.item6icon,
+      },
+    ].filter((item) => item.title || item.description || item.icon),
+    id: block.id,
+  });
 };
 
 export const handleSaveFeatures = async (

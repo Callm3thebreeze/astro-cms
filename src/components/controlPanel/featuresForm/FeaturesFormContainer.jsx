@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const FeaturesFormContainer = ({
   form,
@@ -10,23 +10,42 @@ const FeaturesFormContainer = ({
     { title: "", description: "", icon: "" },
   ]);
 
+  useEffect(() => {
+    if (form.items) {
+      setItems(form.items);
+    }
+  }, [form]);
+
   const handleItemChange = (index, e) => {
     const { name, value } = e.target;
     const updatedItems = items.map((item, i) =>
       i === index ? { ...item, [name]: value } : item,
     );
     setItems(updatedItems);
+    setForm((prevForm) => ({
+      ...prevForm,
+      items: updatedItems,
+    }));
   };
 
   const handleAddItem = () => {
     if (items.length < 6) {
-      setItems([...items, { title: "", description: "", icon: "" }]);
+      const newItems = [...items, { title: "", description: "", icon: "" }];
+      setItems(newItems);
+      setForm((prevForm) => ({
+        ...prevForm,
+        items: newItems,
+      }));
     }
   };
 
   const handleRemoveItem = (index) => {
     const updatedItems = items.filter((_, i) => i !== index);
     setItems(updatedItems);
+    setForm((prevForm) => ({
+      ...prevForm,
+      items: updatedItems,
+    }));
   };
 
   return (
@@ -69,14 +88,14 @@ const FeaturesFormContainer = ({
             <div key={index} className="space-y-4 border-b pb-4">
               <div>
                 <label
-                  htmlFor={`item-title-${index}`}
+                  htmlFor={`item${index + 1}title`}
                   className="block text-sm font-medium text-gray-700">
                   Título del Item
                 </label>
                 <input
                   type="text"
                   name="title"
-                  id={`item-title-${index}`}
+                  id={`item${index + 1}title`}
                   value={item.title}
                   onChange={(e) => handleItemChange(index, e)}
                   className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -84,13 +103,13 @@ const FeaturesFormContainer = ({
               </div>
               <div>
                 <label
-                  htmlFor={`item-description-${index}`}
+                  htmlFor={`item${index + 1}description`}
                   className="block text-sm font-medium text-gray-700">
                   Descripción del Item
                 </label>
                 <textarea
                   name="description"
-                  id={`item-description-${index}`}
+                  id={`item${index + 1}description`}
                   value={item.description}
                   onChange={(e) => handleItemChange(index, e)}
                   className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md resize-none"
@@ -98,14 +117,14 @@ const FeaturesFormContainer = ({
               </div>
               <div>
                 <label
-                  htmlFor={`item-icon-${index}`}
+                  htmlFor={`item${index + 1}icon`}
                   className="block text-sm font-medium text-gray-700">
                   Icono del Item
                 </label>
                 <input
                   type="text"
                   name="icon"
-                  id={`item-icon-${index}`}
+                  id={`item${index + 1}icon`}
                   value={item.icon}
                   onChange={(e) => handleItemChange(index, e)}
                   className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
