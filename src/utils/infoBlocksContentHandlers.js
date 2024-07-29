@@ -47,6 +47,7 @@ export const updateContentFile = async (updatedBlocks) => {
         text: block.button2Text,
       },
     ].filter((link) => link.text),
+    type: block.type,
   }));
 
   await saveContentToFile(
@@ -79,6 +80,7 @@ export const updateContentFile = async (updatedBlocks) => {
           text: head.button2Text,
         },
       ].filter((link) => link.text),
+      type: head.type,
     },
     blocks,
   );

@@ -14,7 +14,7 @@ export const fetchBlocks = async (DATABASE_ID, COLLECTION_ID, setBlocks) => {
   }
 };
 
-export const handleSave = async (
+export const handleSaveInfoBlock = async (
   e,
   form,
   setForm,
@@ -46,6 +46,7 @@ export const handleSave = async (
     "button2Style",
     "button2Icon",
     "button2IconStyle",
+    "type",
   ];
 
   const filteredData = Object.keys(formData)
@@ -54,6 +55,8 @@ export const handleSave = async (
       obj[key] = formData[key];
       return obj;
     }, {});
+
+  filteredData.type = "infoBlock";
 
   try {
     let response;
@@ -108,6 +111,74 @@ export const handleSave = async (
       button2Icon: "",
       button2IconStyle: "",
       id: null,
+      type: "infoBlock",
+    });
+  } catch (error) {
+    console.error("Error saving document:", error);
+  }
+};
+
+export const handleSaveFeatures = async (
+  e,
+  form,
+  setForm,
+  setBlocks,
+  DATABASE_ID,
+  COLLECTION_ID,
+) => {
+  e.preventDefault();
+  console.log("Form data before save:", form);
+
+  const { id, ...formData } = form;
+
+  const allowedFields = ["featureTitle", "featureSubtitle", "items", "type"];
+
+  const filteredData = Object.keys(formData)
+    .filter((key) => allowedFields.includes(key))
+    .reduce((obj, key) => {
+      obj[key] = formData[key];
+      return obj;
+    }, {});
+
+  filteredData.type = "features";
+
+  try {
+    let response;
+    if (id) {
+      response = await databases.updateDocument(
+        DATABASE_ID,
+        COLLECTION_ID,
+        id,
+        filteredData,
+      );
+      console.log("Document updated:", response);
+    } else {
+      response = await databases.createDocument(
+        DATABASE_ID,
+        COLLECTION_ID,
+        ID.unique(),
+        filteredData,
+      );
+      console.log("Document created:", response);
+    }
+
+    const newBlocksResponse = await databases.listDocuments(
+      DATABASE_ID,
+      COLLECTION_ID,
+    );
+    const updatedBlocks = newBlocksResponse.documents.map((doc) => ({
+      ...doc,
+      id: doc.$id,
+    }));
+
+    await updateContentFile(updatedBlocks);
+
+    setBlocks(updatedBlocks);
+
+    setForm({
+      featureTitle: "",
+      featureSubtitle: "",
+      items: [{ title: "", description: "", icon: "" }],
     });
   } catch (error) {
     console.error("Error saving document:", error);
@@ -135,7 +206,7 @@ export const handleDelete = async (
     }
     setBlocks(async (prevBlocks) => {
       const updatedBlocks = prevBlocks.filter((_, i) => i !== index);
-      await updateContentFile(updatedBlocks); // Llama a la API después de actualizar los bloques
+      await updateContentFile(updatedBlocks);
       return updatedBlocks;
     });
   } catch (error) {

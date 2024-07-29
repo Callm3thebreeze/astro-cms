@@ -8,7 +8,8 @@ import {
   handleImageStyleChange,
 } from "@utils/formHandlers";
 import {
-  handleSave,
+  handleSaveInfoBlock,
+  handleSaveFeatures,
   handleDelete,
   handleEdit,
   fetchBlocks,
@@ -36,15 +37,16 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
     button2Style: "primary",
     button2Icon: "",
     button2IconStyle: "",
+    type: "infoBlock",
     id: null,
   });
-
   const [featuresForm, setFeaturesForm] = useState({
     featureTitle: "",
     featureSubtitle: "",
     items: [{ title: "", description: "", icon: "" }],
+    type: "features",
+    id: null,
   });
-
   const [showLink1, setShowLink1] = useState(false);
   const [showLink2, setShowLink2] = useState(false);
   const [selectedForm, setSelectedForm] = useState("infoBlocks");
@@ -52,24 +54,6 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
   useEffect(() => {
     fetchBlocks(DATABASE_ID, COLLECTION_ID, setBlocks);
   }, [DATABASE_ID, COLLECTION_ID]);
-
-  const handleFormSave = (e) => {
-    e.preventDefault();
-    console.log("Saving form...");
-    if (selectedForm === "infoBlocks") {
-      handleSave(
-        e,
-        infoBlockForm,
-        setInfoBlockForm,
-        setBlocks,
-        DATABASE_ID,
-        COLLECTION_ID,
-      );
-    } else {
-      console.log("Features form data:", featuresForm);
-      // Aquí puedes agregar la lógica para guardar featuresForm
-    }
-  };
 
   const handleFileChange = async (e, setForm) => {
     const file = e.target.files[0];
@@ -96,7 +80,16 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
             form={infoBlockForm}
             setForm={setInfoBlockForm}
             handleInputChange={handleInputChange}
-            handleSave={handleFormSave}
+            handleSave={(e) =>
+              handleSaveInfoBlock(
+                e,
+                infoBlockForm,
+                setInfoBlockForm,
+                setBlocks,
+                DATABASE_ID,
+                COLLECTION_ID,
+              )
+            }
             showLink1={showLink1}
             showLink2={showLink2}
             setShowLink1={setShowLink1}
@@ -112,7 +105,16 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
             form={featuresForm}
             setForm={setFeaturesForm}
             handleInputChange={handleInputChange}
-            handleSave={handleFormSave}
+            handleSave={(e) =>
+              handleSaveFeatures(
+                e,
+                featuresForm,
+                setFeaturesForm,
+                setBlocks,
+                DATABASE_ID,
+                COLLECTION_ID,
+              )
+            }
           />
         );
       default:
@@ -127,11 +129,7 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
           <li>
             <button
               onClick={() => setSelectedForm("infoBlocks")}
-              className={`inline-flex items-center px-4 py-3 w-full rounded-lg ${
-                selectedForm === "infoBlocks"
-                  ? "bg-blue-700 text-white dark:bg-blue-600"
-                  : "bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
-              }`}>
+              className={`inline-flex items-center px-4 py-3 w-full rounded-lg ${selectedForm === "infoBlocks" ? "bg-blue-700 text-white dark:bg-blue-600" : "bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"}`}>
               <svg
                 className="w-4 h-4 me-2"
                 aria-hidden="true"
@@ -146,11 +144,7 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
           <li>
             <button
               onClick={() => setSelectedForm("features")}
-              className={`inline-flex items-center px-4 py-3 w-full rounded-lg ${
-                selectedForm === "features"
-                  ? "bg-blue-700 text-white dark:bg-blue-600"
-                  : "bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
-              }`}>
+              className={`inline-flex items-center px-4 py-3 w-full rounded-lg ${selectedForm === "features" ? "bg-blue-700 text-white dark:bg-blue-600" : "bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"}`}>
               <svg
                 className="w-4 h-4 me-2"
                 aria-hidden="true"
@@ -169,7 +163,15 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
         {renderForm()}
         <BlockList
           blocks={blocks}
-          handleEdit={(index) => handleEdit(index, blocks, setInfoBlockForm)}
+          handleEdit={(index) =>
+            handleEdit(
+              index,
+              blocks,
+              selectedForm === "infoBlocks"
+                ? setInfoBlockForm
+                : setFeaturesForm,
+            )
+          }
           handleDelete={(index) =>
             handleDelete(
               index,
