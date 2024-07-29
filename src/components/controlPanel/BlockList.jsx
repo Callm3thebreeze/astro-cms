@@ -1,10 +1,10 @@
-import BlockItem from "./BlockItem";
+import InfoBlockItem from "./InfoBlockItem";
 
 const BlockList = ({ blocks, handleEdit, handleDelete }) => {
   return (
     <div className="mt-8">
       {blocks.map((block, index) => (
-        <BlockItem
+        <InfoBlockItem
           key={index}
           block={block}
           handleEdit={() => handleEdit(index)}

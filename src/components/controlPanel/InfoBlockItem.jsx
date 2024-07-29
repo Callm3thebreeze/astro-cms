@@ -1,4 +1,4 @@
-const BlockItem = ({ block, handleEdit, handleDelete }) => {
+const InfoBlockItem = ({ block, handleEdit, handleDelete }) => {
   const truncateText = (text, maxLength) => {
     if (!text) return;
     if (text.length > maxLength) {
@@ -66,4 +66,4 @@ const BlockItem = ({ block, handleEdit, handleDelete }) => {
   );
 };
 
-export default BlockItem;
+export default InfoBlockItem;
