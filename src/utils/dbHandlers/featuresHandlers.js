@@ -1,28 +1,7 @@
-import { databases, ID } from "@lib/appwrite";
+// src/utils/dbHandlers/featuresHandlers.js
 
-const mapFeatureData = (formData) => ({
-  title: formData.featureTitle,
-  subtitle: formData.featureSubtitle,
-  item1title: formData.items[0]?.title || "",
-  item1description: formData.items[0]?.description || "",
-  item1icon: formData.items[0]?.icon || "",
-  item2title: formData.items[1]?.title || "",
-  item2description: formData.items[1]?.description || "",
-  item2icon: formData.items[1]?.icon || "",
-  item3title: formData.items[2]?.title || "",
-  item3description: formData.items[2]?.description || "",
-  item3icon: formData.items[2]?.icon || "",
-  item4title: formData.items[3]?.title || "",
-  item4description: formData.items[3]?.description || "",
-  item4icon: formData.items[3]?.icon || "",
-  item5title: formData.items[4]?.title || "",
-  item5description: formData.items[4]?.description || "",
-  item5icon: formData.items[4]?.icon || "",
-  item6title: formData.items[5]?.title || "",
-  item6description: formData.items[5]?.description || "",
-  item6icon: formData.items[5]?.icon || "",
-  type: "features",
-});
+import { databases, ID } from "@lib/appwrite";
+import { updateFeaturesContentFile } from "../featuresFileHandlers";
 
 export const handleSaveFeatures = async (
   e,
@@ -36,7 +15,30 @@ export const handleSaveFeatures = async (
   console.log("Features form data before save:", featuresForm);
 
   const { id, ...formData } = featuresForm;
-  const featureData = mapFeatureData(formData);
+
+  const featureData = {
+    title: formData.featureTitle,
+    subtitle: formData.featureSubtitle,
+    item1title: formData.items[0]?.title || "",
+    item1description: formData.items[0]?.description || "",
+    item1icon: formData.items[0]?.icon || "",
+    item2title: formData.items[1]?.title || "",
+    item2description: formData.items[1]?.description || "",
+    item2icon: formData.items[1]?.icon || "",
+    item3title: formData.items[2]?.title || "",
+    item3description: formData.items[2]?.description || "",
+    item3icon: formData.items[2]?.icon || "",
+    item4title: formData.items[3]?.title || "",
+    item4description: formData.items[3]?.description || "",
+    item4icon: formData.items[3]?.icon || "",
+    item5title: formData.items[4]?.title || "",
+    item5description: formData.items[4]?.description || "",
+    item5icon: formData.items[4]?.icon || "",
+    item6title: formData.items[5]?.title || "",
+    item6description: formData.items[5]?.description || "",
+    item6icon: formData.items[5]?.icon || "",
+    type: "features",
+  };
 
   try {
     let response;
@@ -73,6 +75,8 @@ export const handleSaveFeatures = async (
       ...updatedBlocks,
     ]);
 
+    await updateFeaturesContentFile(updatedBlocks);
+
     setFeaturesForm({
       featureTitle: "",
       featureSubtitle: "",
@@ -83,7 +87,6 @@ export const handleSaveFeatures = async (
     console.error("Error saving feature document:", error);
   }
 };
-
 export const handleEditFeature = (index, blocks, setFeaturesForm) => {
   const block = blocks[index];
   console.log(`Editing feature document with ID: ${block.id}`);

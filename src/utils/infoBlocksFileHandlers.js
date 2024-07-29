@@ -1,6 +1,6 @@
 const saveContentToFile = async (head, blocks) => {
   try {
-    const response = await fetch("/api/saveContent", {
+    const response = await fetch("/api/saveInfoBlockContent", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
