@@ -1,5 +1,5 @@
 import { databases, storage } from "@lib/appwrite";
-import { updateContentFile } from "../infoBlocksContentHandlers";
+import { updateContentFile } from "../infoBlocksFileHandlers";
 
 export const handleDelete = async (
   index,

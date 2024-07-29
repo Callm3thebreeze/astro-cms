@@ -1,5 +1,5 @@
 import { databases, ID } from "@lib/appwrite";
-import { updateContentFile } from "../infoBlocksContentHandlers";
+import { updateContentFile } from "../infoBlocksFileHandlers";
 
 const allowedFields = [
   "title",
