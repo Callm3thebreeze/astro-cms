@@ -1,4 +1,4 @@
-- Refactorizar handlers y AdminPage
+- Limpiar infoBlock.js
 - Invesrtigar de donde proviene el refresco de la página al editar crear o eliminar bloques
 - hacer que cree infoBlocks.js si este no existe
 - Evitar refresco de página al editar bloques desde el panel de control

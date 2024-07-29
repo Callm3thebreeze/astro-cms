@@ -107,6 +107,17 @@ const AdminPage = ({
     }
   };
 
+  const handleEdit = (index) => {
+    const block = blocks[index];
+    if (block.type === "features") {
+      setSelectedForm("features");
+      handleEditFeature(index, blocks, setFeaturesForm);
+    } else {
+      setSelectedForm("infoBlocks");
+      handleEditInfoBlock(index, blocks, setInfoBlockForm);
+    }
+  };
+
   const renderForm = () => {
     switch (selectedForm) {
       case "infoBlocks":
@@ -172,14 +183,7 @@ const AdminPage = ({
         {renderForm()}
         <BlockList
           blocks={blocks}
-          handleEdit={(index) => {
-            const block = blocks[index];
-            if (block.type === "features") {
-              handleEditFeature(index, blocks, setFeaturesForm);
-            } else {
-              handleEditInfoBlock(index, blocks, setInfoBlockForm);
-            }
-          }}
+          handleEdit={handleEdit}
           handleDelete={(index) => {
             const block = blocks[index];
             if (block.type === "features") {
