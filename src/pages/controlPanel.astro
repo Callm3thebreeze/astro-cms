@@ -4,7 +4,8 @@ import Container from "@components/container.astro";
 import AdminPage from "@components/controlPanel/AdminPage.jsx";
 
 const DATABASE_ID = import.meta.env.PUBLIC_DATABASE_ID;
-const COLLECTION_ID = import.meta.env.PUBLIC_COLLECTION_ID;
+const INFOBLOCK_COLLECTION_ID = import.meta.env.PUBLIC_INFOBLOCK_COLLECTION_ID;
+const FEATURES_COLLECTION_ID = import.meta.env.PUBLIC_FEATURES_COLLECTION_ID;
 const BUCKET_ID = import.meta.env.PUBLIC_BUCKET_ID;
 ---
 
@@ -12,7 +13,8 @@ const BUCKET_ID = import.meta.env.PUBLIC_BUCKET_ID;
   <Container>
     <AdminPage
       DATABASE_ID={DATABASE_ID}
-      COLLECTION_ID={COLLECTION_ID}
+      INFOBLOCK_COLLECTION_ID={INFOBLOCK_COLLECTION_ID}
+      FEATURES_COLLECTION_ID={FEATURES_COLLECTION_ID}
       BUCKET_ID={BUCKET_ID}
       client:load
     />

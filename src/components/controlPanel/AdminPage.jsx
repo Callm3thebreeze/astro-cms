@@ -16,7 +16,12 @@ import {
 } from "@utils/dbInfoBlockHandlers";
 import { storage, ID } from "@lib/appwrite";
 
-const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
+const AdminPage = ({
+  DATABASE_ID,
+  INFOBLOCK_COLLECTION_ID,
+  FEATURES_COLLECTION_ID,
+  BUCKET_ID,
+}) => {
   const [blocks, setBlocks] = useState([]);
   const [infoBlockForm, setInfoBlockForm] = useState({
     title: "",
@@ -37,14 +42,12 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
     button2Style: "primary",
     button2Icon: "",
     button2IconStyle: "",
-    type: "infoBlock",
     id: null,
   });
   const [featuresForm, setFeaturesForm] = useState({
     featureTitle: "",
     featureSubtitle: "",
     items: [{ title: "", description: "", icon: "" }],
-    type: "features",
     id: null,
   });
   const [showLink1, setShowLink1] = useState(false);
@@ -52,8 +55,13 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
   const [selectedForm, setSelectedForm] = useState("infoBlocks");
 
   useEffect(() => {
-    fetchBlocks(DATABASE_ID, COLLECTION_ID, setBlocks);
-  }, [DATABASE_ID, COLLECTION_ID]);
+    fetchBlocks(
+      DATABASE_ID,
+      INFOBLOCK_COLLECTION_ID,
+      FEATURES_COLLECTION_ID,
+      setBlocks,
+    );
+  }, [DATABASE_ID, INFOBLOCK_COLLECTION_ID, FEATURES_COLLECTION_ID]);
 
   const handleFileChange = async (e, setForm) => {
     const file = e.target.files[0];
@@ -87,7 +95,7 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
                 setInfoBlockForm,
                 setBlocks,
                 DATABASE_ID,
-                COLLECTION_ID,
+                INFOBLOCK_COLLECTION_ID,
               )
             }
             showLink1={showLink1}
@@ -112,7 +120,7 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
                 setFeaturesForm,
                 setBlocks,
                 DATABASE_ID,
-                COLLECTION_ID,
+                FEATURES_COLLECTION_ID,
               )
             }
           />
@@ -178,7 +186,9 @@ const AdminPage = ({ DATABASE_ID, COLLECTION_ID, BUCKET_ID }) => {
               blocks,
               setBlocks,
               DATABASE_ID,
-              COLLECTION_ID,
+              selectedForm === "infoBlocks"
+                ? INFOBLOCK_COLLECTION_ID
+                : FEATURES_COLLECTION_ID,
               BUCKET_ID,
             )
           }

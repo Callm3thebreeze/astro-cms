@@ -1,14 +1,31 @@
 import { databases, storage, ID } from "@lib/appwrite";
 import { updateContentFile } from "./infoBlocksContentHandlers";
 
-export const fetchBlocks = async (DATABASE_ID, COLLECTION_ID, setBlocks) => {
+export const fetchBlocks = async (
+  DATABASE_ID,
+  INFOBLOCK_COLLECTION_ID,
+  FEATURES_COLLECTION_ID,
+  setBlocks,
+) => {
   try {
-    const response = await databases.listDocuments(DATABASE_ID, COLLECTION_ID);
-    const blocks = response.documents.map((doc) => ({
+    const [infoBlocksResponse, featuresResponse] = await Promise.all([
+      databases.listDocuments(DATABASE_ID, INFOBLOCK_COLLECTION_ID),
+      databases.listDocuments(DATABASE_ID, FEATURES_COLLECTION_ID),
+    ]);
+
+    const infoBlocks = infoBlocksResponse.documents.map((doc) => ({
       ...doc,
       id: doc.$id,
+      type: "infoBlock",
     }));
-    setBlocks(blocks);
+
+    const featuresBlocks = featuresResponse.documents.map((doc) => ({
+      ...doc,
+      id: doc.$id,
+      type: "features",
+    }));
+
+    setBlocks([...infoBlocks, ...featuresBlocks]);
   } catch (error) {
     console.error("Error fetching documents:", error);
   }
@@ -20,7 +37,7 @@ export const handleSaveInfoBlock = async (
   setForm,
   setBlocks,
   DATABASE_ID,
-  COLLECTION_ID,
+  INFOBLOCK_COLLECTION_ID,
 ) => {
   e.preventDefault();
   console.log("Form data before save:", form);
@@ -46,7 +63,6 @@ export const handleSaveInfoBlock = async (
     "button2Style",
     "button2Icon",
     "button2IconStyle",
-    "type",
   ];
 
   const filteredData = Object.keys(formData)
@@ -56,14 +72,12 @@ export const handleSaveInfoBlock = async (
       return obj;
     }, {});
 
-  filteredData.type = "infoBlock";
-
   try {
     let response;
     if (id) {
       response = await databases.updateDocument(
         DATABASE_ID,
-        COLLECTION_ID,
+        INFOBLOCK_COLLECTION_ID,
         id,
         filteredData,
       );
@@ -71,7 +85,7 @@ export const handleSaveInfoBlock = async (
     } else {
       response = await databases.createDocument(
         DATABASE_ID,
-        COLLECTION_ID,
+        INFOBLOCK_COLLECTION_ID,
         ID.unique(),
         filteredData,
       );
@@ -80,16 +94,20 @@ export const handleSaveInfoBlock = async (
 
     const newBlocksResponse = await databases.listDocuments(
       DATABASE_ID,
-      COLLECTION_ID,
+      INFOBLOCK_COLLECTION_ID,
     );
     const updatedBlocks = newBlocksResponse.documents.map((doc) => ({
       ...doc,
       id: doc.$id,
+      type: "infoBlock",
     }));
 
     await updateContentFile(updatedBlocks);
 
-    setBlocks(updatedBlocks);
+    setBlocks((prevBlocks) => [
+      ...prevBlocks.filter((block) => block.type !== "infoBlock"),
+      ...updatedBlocks,
+    ]);
 
     setForm({
       title: "",
@@ -111,74 +129,6 @@ export const handleSaveInfoBlock = async (
       button2Icon: "",
       button2IconStyle: "",
       id: null,
-      type: "infoBlock",
-    });
-  } catch (error) {
-    console.error("Error saving document:", error);
-  }
-};
-
-export const handleSaveFeatures = async (
-  e,
-  form,
-  setForm,
-  setBlocks,
-  DATABASE_ID,
-  COLLECTION_ID,
-) => {
-  e.preventDefault();
-  console.log("Form data before save:", form);
-
-  const { id, ...formData } = form;
-
-  const allowedFields = ["featureTitle", "featureSubtitle", "items", "type"];
-
-  const filteredData = Object.keys(formData)
-    .filter((key) => allowedFields.includes(key))
-    .reduce((obj, key) => {
-      obj[key] = formData[key];
-      return obj;
-    }, {});
-
-  filteredData.type = "features";
-
-  try {
-    let response;
-    if (id) {
-      response = await databases.updateDocument(
-        DATABASE_ID,
-        COLLECTION_ID,
-        id,
-        filteredData,
-      );
-      console.log("Document updated:", response);
-    } else {
-      response = await databases.createDocument(
-        DATABASE_ID,
-        COLLECTION_ID,
-        ID.unique(),
-        filteredData,
-      );
-      console.log("Document created:", response);
-    }
-
-    const newBlocksResponse = await databases.listDocuments(
-      DATABASE_ID,
-      COLLECTION_ID,
-    );
-    const updatedBlocks = newBlocksResponse.documents.map((doc) => ({
-      ...doc,
-      id: doc.$id,
-    }));
-
-    await updateContentFile(updatedBlocks);
-
-    setBlocks(updatedBlocks);
-
-    setForm({
-      featureTitle: "",
-      featureSubtitle: "",
-      items: [{ title: "", description: "", icon: "" }],
     });
   } catch (error) {
     console.error("Error saving document:", error);
@@ -206,7 +156,7 @@ export const handleDelete = async (
     }
     setBlocks(async (prevBlocks) => {
       const updatedBlocks = prevBlocks.filter((_, i) => i !== index);
-      await updateContentFile(updatedBlocks);
+      await updateContentFile(updatedBlocks); // Llama a la API después de actualizar los bloques
       return updatedBlocks;
     });
   } catch (error) {
@@ -218,4 +168,87 @@ export const handleEdit = (index, blocks, setForm) => {
   const block = blocks[index];
   console.log(`Editing document with ID: ${block.id}`);
   setForm(block);
+};
+
+export const handleSaveFeatures = async (
+  e,
+  featuresForm,
+  setFeaturesForm,
+  setBlocks,
+  DATABASE_ID,
+  FEATURES_COLLECTION_ID,
+) => {
+  e.preventDefault();
+  console.log("Features form data before save:", featuresForm);
+
+  const { id, ...formData } = featuresForm;
+
+  const featureData = {
+    title: formData.featureTitle,
+    subtitle: formData.featureSubtitle,
+    item1title: formData.items[0]?.title || "",
+    item1description: formData.items[0]?.description || "",
+    item1icon: formData.items[0]?.icon || "",
+    item2title: formData.items[1]?.title || "",
+    item2description: formData.items[1]?.description || "",
+    item2icon: formData.items[1]?.icon || "",
+    item3title: formData.items[2]?.title || "",
+    item3description: formData.items[2]?.description || "",
+    item3icon: formData.items[2]?.icon || "",
+    item4title: formData.items[3]?.title || "",
+    item4description: formData.items[3]?.description || "",
+    item4icon: formData.items[3]?.icon || "",
+    item5title: formData.items[4]?.title || "",
+    item5description: formData.items[4]?.description || "",
+    item5icon: formData.items[4]?.icon || "",
+    item6title: formData.items[5]?.title || "",
+    item6description: formData.items[5]?.description || "",
+    item6icon: formData.items[5]?.icon || "",
+    type: "features",
+  };
+
+  try {
+    let response;
+    if (id) {
+      response = await databases.updateDocument(
+        DATABASE_ID,
+        FEATURES_COLLECTION_ID,
+        id,
+        featureData,
+      );
+      console.log("Feature document updated:", response);
+    } else {
+      response = await databases.createDocument(
+        DATABASE_ID,
+        FEATURES_COLLECTION_ID,
+        ID.unique(),
+        featureData,
+      );
+      console.log("Feature document created:", response);
+    }
+
+    const newBlocksResponse = await databases.listDocuments(
+      DATABASE_ID,
+      FEATURES_COLLECTION_ID,
+    );
+    const updatedBlocks = newBlocksResponse.documents.map((doc) => ({
+      ...doc,
+      id: doc.$id,
+      type: "features",
+    }));
+
+    setBlocks((prevBlocks) => [
+      ...prevBlocks.filter((block) => block.type !== "features"),
+      ...updatedBlocks,
+    ]);
+
+    setFeaturesForm({
+      featureTitle: "",
+      featureSubtitle: "",
+      items: [{ title: "", description: "", icon: "" }],
+      id: null,
+    });
+  } catch (error) {
+    console.error("Error saving feature document:", error);
+  }
 };
