@@ -7,14 +7,16 @@ import {
   handleImageSizeChange,
   handleImageStyleChange,
 } from "@utils/formHandlers";
+import { fetchBlocks } from "@utils/dbHandlers/fetchHandlers";
 import {
   handleSaveInfoBlock,
-  handleDelete,
   handleEditInfoBlock,
-  handleEditFeature,
-  fetchBlocks,
+} from "@utils/dbHandlers/infoBlockHandlers";
+import {
   handleSaveFeatures,
-} from "@utils/dbInfoBlockHandlers";
+  handleEditFeature,
+} from "@utils/dbHandlers/featuresHandlers";
+import { handleDelete } from "@utils/dbHandlers/deleteHandler";
 import { storage, ID } from "@lib/appwrite";
 
 const AdminPage = ({
