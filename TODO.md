@@ -1,12 +1,8 @@
-- Limpiar infoBlock.js
-- Invesrtigar de donde proviene el refresco de la página al editar crear o eliminar bloques
-- hacer que cree infoBlocks.js si este no existe
-- Evitar refresco de página al editar bloques desde el panel de control
-- Replicar al apariencia del componente en la apariencia de los elementos creados en el panel de control
 - idear un sistema de reorganización de bloques por drag & drop
 - desarrollar panel de control del navbar
-- desarrollar panel de control de las features
 - desarrollar panel de control del bloque de logos
 - desarrollar panel de control del cta
+- Evitar refresco de página al editar bloques desde el panel de control
+- Replicar al apariencia del componente en la apariencia de los elementos creados en el panel de control
 - implementar autenticación para acceder al panel de control
 - actualizar README

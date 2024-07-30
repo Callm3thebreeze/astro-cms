@@ -1,7 +1,6 @@
-// src/pages/api/saveFeaturesContent.js
-
-import { writeFile } from "fs/promises";
+import { writeFile, access } from "fs/promises";
 import { join } from "path";
+import { constants } from "fs";
 
 export async function POST({ request }) {
   const data = await request.json();
@@ -9,13 +8,16 @@ export async function POST({ request }) {
 
   const features = data.features;
 
-  if (!features) {
-    return res.status(400).json({ message: "No features data provided" });
-  }
-
   const content = `
-    export const features = ${JSON.stringify(features[0], null, 2)};
+export const features = ${JSON.stringify(features, null, 2)};
   `;
+
+  try {
+    await access(filePath, constants.F_OK);
+  } catch (error) {
+    // El archivo no existe, así que lo creamos
+    await writeFile(filePath, "");
+  }
 
   try {
     await writeFile(filePath, content);

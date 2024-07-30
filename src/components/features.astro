@@ -1,27 +1,28 @@
 ---
 import { Icon } from "astro-icon/components";
-import { features } from "@content/features.js";
+
+const { content } = Astro.props;
 ---
 
 {
-  features && (
+  content && (
     <div class="mt-16 md:mt-20">
-      {features.title && (
+      {content.title && (
         <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight">
-          {features.title}
+          {content.title}
         </h2>
       )}
-      {features.subtitle && (
-        <p class="text-lg mt-4 text-slate-600">{features.subtitle}</p>
+      {content.subtitle && (
+        <p class="text-lg mt-4 text-slate-600">{content.subtitle}</p>
       )}
     </div>
   )
 }
 
 {
-  features && features.items && features.items.length > 0 && (
+  content && content.items && content.items.length > 0 && (
     <div class="grid sm:grid-cols-2 md:grid-cols-3 mt-16 gap-16">
-      {features.items.map((item, index) => (
+      {content.items.map((item, index) => (
         <div key={index} class="flex gap-4 items-start">
           {item.icon && (
             <div class="mt-1 bg-black rounded-full p-2 w-8 h-8 shrink-0">
