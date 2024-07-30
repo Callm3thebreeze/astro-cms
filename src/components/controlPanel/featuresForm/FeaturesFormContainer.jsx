@@ -53,9 +53,6 @@ const FeaturesFormContainer = ({
       <form onSubmit={handleSave}>
         <div>
           <div className="space-y-4 md:col-span-1 bg-gray-100 rounded-md p-4">
-            <legend className="text-lg font-bold text-gray-900 mb-4">
-              Features
-            </legend>
             <div>
               <label
                 htmlFor="featureTitle"
