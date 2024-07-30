@@ -5,4 +5,5 @@
 - Evitar refresco de página al editar bloques desde el panel de control
 - Replicar al apariencia del componente en la apariencia de los elementos creados en el panel de control
 - implementar autenticación para acceder al panel de control
+- implementar compresión de imágenes
 - actualizar README

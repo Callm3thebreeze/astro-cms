@@ -7,15 +7,27 @@ const { content } = Astro.props;
 ---
 
 <Container>
-  <header class="flex flex-col lg:flex-row justify-between items-center my-5">
+  <header class="flex flex-col lg:flex-row justify-between items-center mt-5">
     <Astronav>
       <div class="flex w-full lg:w-auto items-center justify-between">
-        <a href="/" class="text-lg">
-          <span class="font-bold text-slate-800"
-            >{content.mainText}<span class="text-slate-500"
-              >{content.secondaryText}</span
-            ></span
-          >
+        <a href="/" class="text-lg flex items-center">
+          {
+            content.logo.src && (
+              <img
+                src={content.logo.src}
+                alt={content.logo.alt}
+                class="w-12 h-12 mr-2"
+              />
+            )
+          }
+          <span class="font-bold text-slate-800">
+            {content.mainText && <>{content.mainText}</>}
+            {
+              content.secondaryText && (
+                <span class="text-slate-500">{content.secondaryText}</span>
+              )
+            }
+          </span>
         </a>
         <div class="block lg:hidden">
           <MenuIcon class="w-4 h-4 text-gray-800" />
