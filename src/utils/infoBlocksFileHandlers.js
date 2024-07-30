@@ -18,15 +18,48 @@ const saveContentToFile = async (head, blocks) => {
 
 export const updateContentFile = async (updatedBlocks) => {
   const head = updatedBlocks.length > 0 ? updatedBlocks[0] : {};
-  const blocks = updatedBlocks.slice(1).map((block) => ({
-    ...block,
-    titleClass: block.titleSize,
+  const cleanedHead = {
+    title: head.title,
+    content: head.content,
+    image: {
+      class: head.imagePosition,
+      picClass: head.imageStyle,
+      src: head.imageSrc,
+      alt: head.imageAlt,
+    },
+    titleClass: head.titleSize,
+    links: [
+      {
+        href: head.button1Href,
+        style: head.button1Style,
+        icon: {
+          name: head.button1Icon,
+          class: head.button1IconStyle,
+        },
+        text: head.button1Text,
+      },
+      {
+        href: head.button2Href,
+        style: head.button2Style,
+        icon: {
+          name: head.button2Icon,
+          class: head.button2IconStyle,
+        },
+        text: head.button2Text,
+      },
+    ].filter((link) => link.text),
+  };
+
+  const cleanedBlocks = updatedBlocks.slice(1).map((block) => ({
+    title: block.title,
+    content: block.content,
     image: {
       class: block.imagePosition,
       picClass: block.imageStyle,
       src: block.imageSrc,
       alt: block.imageAlt,
     },
+    titleClass: block.titleSize,
     links: [
       {
         href: block.button1Href,
@@ -47,41 +80,7 @@ export const updateContentFile = async (updatedBlocks) => {
         text: block.button2Text,
       },
     ].filter((link) => link.text),
-    type: block.type,
   }));
 
-  await saveContentToFile(
-    {
-      ...head,
-      titleClass: head.titleSize,
-      image: {
-        class: head.imagePosition,
-        picClass: head.imageStyle,
-        src: head.imageSrc,
-        alt: head.imageAlt,
-      },
-      links: [
-        {
-          href: head.button1Href,
-          style: head.button1Style,
-          icon: {
-            name: head.button1Icon,
-            class: head.button1IconStyle,
-          },
-          text: head.button1Text,
-        },
-        {
-          href: head.button2Href,
-          style: head.button2Style,
-          icon: {
-            name: head.button2Icon,
-            class: head.button2IconStyle,
-          },
-          text: head.button2Text,
-        },
-      ].filter((link) => link.text),
-      type: head.type,
-    },
-    blocks,
-  );
+  await saveContentToFile(cleanedHead, cleanedBlocks);
 };

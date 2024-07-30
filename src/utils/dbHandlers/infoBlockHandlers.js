@@ -20,6 +20,7 @@ const allowedFields = [
   "button2Style",
   "button2Icon",
   "button2IconStyle",
+  "type",
 ];
 
 const filterFormData = (formData) =>

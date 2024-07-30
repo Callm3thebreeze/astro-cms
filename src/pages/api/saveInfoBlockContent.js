@@ -5,11 +5,12 @@ export async function POST({ request }) {
   const data = await request.json();
   const filePath = join(process.cwd(), "src", "content", "infoBlocks.js");
 
+  const head = data.head;
   const blocks = data.blocks;
 
   const content = `
-    export const head = ${JSON.stringify(data.head, null, 2)};
-    export const blocks = ${JSON.stringify(blocks, null, 2)};
+export const head = ${JSON.stringify(head, null, 2)};
+export const blocks = ${JSON.stringify(blocks, null, 2)};
   `;
 
   try {
