@@ -1,7 +1,7 @@
-- idear un sistema de reorganización de bloques por drag & drop
-- desarrollar panel de control del navbar
+- desarrollar panel de control del navbar y el footer
 - desarrollar panel de control del bloque de logos
 - desarrollar panel de control del cta
+- idear un sistema de reorganización de bloques por drag & drop
 - Evitar refresco de página al editar bloques desde el panel de control
 - Replicar al apariencia del componente en la apariencia de los elementos creados en el panel de control
 - implementar autenticación para acceder al panel de control
