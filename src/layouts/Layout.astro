@@ -4,6 +4,8 @@ import Footer from "@components/footer.astro";
 import Navbar from "@components/navbar/navbar.astro";
 import "@fontsource-variable/inter/index.css";
 import "@fontsource/roboto";
+import { footer } from "@content/footer.js";
+import { navbar } from "@content/navbar.js";
 
 interface Props {
   title: string;
@@ -47,9 +49,9 @@ const { title } = Astro.props;
     />
   </head>
   <body>
-    <Navbar />
+    <Navbar content={navbar} />
     <slot />
-    <Footer />
+    <Footer content={footer} />
     <style is:global>
       /* Improve Page speed */
       /* https://css-tricks.com/almanac/properties/c/content-visibility/ */

@@ -1,66 +1,40 @@
 ---
 import Container from "@components/container.astro";
-import Dropdown from "./dropdown.astro";
-import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
+import { Astronav, MenuIcon, MenuItems } from "astro-navbar";
+import { FaCog } from "react-icons/fa";
 
-const menuitems = [
-  {
-    title: "Features",
-    path: "#",
-    children: [
-      { title: "Action", path: "/" },
-      { title: "Another action", path: "#" },
-      { title: "Dropdown Submenu", path: "#" },
-      { title: "404 Page", path: "/404" },
-    ],
-  },
-  {
-    title: "Control panel",
-    path: "/controlPanel",
-  },
-];
+const { content } = Astro.props;
 ---
 
 <Container>
   <header class="flex flex-col lg:flex-row justify-between items-center my-5">
     <Astronav>
       <div class="flex w-full lg:w-auto items-center justify-between">
-        <a href="/" class="text-lg"
-          ><span class="font-bold text-slate-800">Astro</span><span
-            class="text-slate-500">CMS</span
+        <a href="/" class="text-lg">
+          <span class="font-bold text-slate-800"
+            >{content.mainText}<span class="text-slate-500"
+              >{content.secondaryText}</span
+            ></span
           >
         </a>
         <div class="block lg:hidden">
           <MenuIcon class="w-4 h-4 text-gray-800" />
         </div>
       </div>
-      <MenuItems class="hidden w-full lg:w-auto mt-2 lg:flex lg:mt-0">
+      <MenuItems class="w-full lg:w-auto mt-2 lg:flex lg:mt-0">
         <ul class="flex flex-col lg:flex-row lg:gap-3">
-          {
-            menuitems.map((item, index) => (
-              <>
-                {item.children && (
-                  <Dropdown
-                    title={item.title}
-                    children={item.children}
-                    lastItem={index === menuitems.length - 1}
-                  />
-                )}
-
-                {!item.children && (
-                  <li>
-                    <a
-                      href={item.path}
-                      class="flex lg:px-3 py-2 items-center text-gray-600 hover:text-gray-900">
-                      <span> {item.title}</span>
-                    </a>
-                  </li>
-                )}
-              </>
-            ))
-          }
+          <li>
+            <a
+              href="/controlPanel"
+              class="flex lg:px-3 py-2 items-center text-gray-600 hover:text-gray-900">
+              <FaCog
+                className="w-5 h-5 text-slate-100 hover:text-slate-400"
+                aria-label="Control Panel"
+              />
+            </a>
+          </li>
         </ul>
       </MenuItems>
     </Astronav>
-  </header></Container
->
+  </header>
+</Container>
