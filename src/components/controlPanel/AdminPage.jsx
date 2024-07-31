@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import InfoBlocksFormContainer from "./infoBlockForm/InfoBlocksFormContainer";
 import FeaturesFormContainer from "./featuresForm/FeaturesFormContainer";
+import NavBarFooterFormContainer from "./navBarFooterForm/NavBarFooterFormContainer";
 import BlockList from "./BlockList";
 import {
   handleInputChange,
@@ -55,9 +56,17 @@ const AdminPage = ({
     id: null,
   });
 
+  const [navbarFooterForm, setNavBarFooterForm] = useState({
+    navbarLogoUrl: "",
+    navbarAltText: "",
+    footerText: "",
+    imageSrc: "",
+    imageFileId: null,
+  });
+
   const [showLink1, setShowLink1] = useState(false);
   const [showLink2, setShowLink2] = useState(false);
-  const [selectedForm, setSelectedForm] = useState("infoBlocks");
+  const [selectedForm, setSelectedForm] = useState("navbarFooter");
 
   useEffect(() => {
     fetchBlocks(
@@ -90,6 +99,12 @@ const AdminPage = ({
     );
   };
 
+  const handleSaveNavBarFooterForm = async (e) => {
+    e.preventDefault();
+    // Implementar la lógica de guardado para navbar y footer
+    console.log("NavBarFooterForm data:", navbarFooterForm);
+  };
+
   const handleFileChange = async (e, setForm) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -120,6 +135,16 @@ const AdminPage = ({
 
   const renderForm = () => {
     switch (selectedForm) {
+      case "navbarFooter":
+        return (
+          <NavBarFooterFormContainer
+            form={navbarFooterForm}
+            setForm={setNavBarFooterForm}
+            handleInputChange={handleInputChange}
+            handleSave={handleSaveNavBarFooterForm}
+            handleFileChange={handleFileChange}
+          />
+        );
       case "infoBlocks":
         return (
           <InfoBlocksFormContainer
@@ -154,6 +179,17 @@ const AdminPage = ({
     <main className="container mx-auto py-8 flex flex-col lg:flex-row">
       <aside className="lg:w-1/4 pr-4 mb-4 lg:mb-0">
         <ul className="space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0">
+          <li>
+            <button
+              onClick={() => setSelectedForm("navbarFooter")}
+              className={`inline-flex items-center px-4 py-3 w-full rounded-lg ${
+                selectedForm === "navbarFooter"
+                  ? "bg-blue-700 text-white dark:bg-blue-600"
+                  : "bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
+              }`}>
+              Navbar & Footer
+            </button>
+          </li>
           <li>
             <button
               onClick={() => setSelectedForm("infoBlocks")}
