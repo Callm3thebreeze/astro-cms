@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import InfoBlocksFormContainer from "./infoBlockForm/InfoBlocksFormContainer";
 import FeaturesFormContainer from "./featuresForm/FeaturesFormContainer";
-import NavBarFooterFormContainer from "./navBarFooterForm/NavBarFooterFormContainer";
+import NavbarFooterForm from "./navBarFooterForm/NavBarFooterFormContainer";
 import BlockList from "./BlockList";
 import {
   handleInputChange,
@@ -18,12 +18,18 @@ import {
   handleEditFeature,
 } from "@utils/dbHandlers/featuresHandlers";
 import { handleDelete } from "@utils/dbHandlers/deleteHandler";
+import {
+  fetchNavbarFooterConfig,
+  saveNavbarFooterConfig,
+} from "@utils/dbHandlers/navbarFooterHandlers";
 import { storage, ID } from "@lib/appwrite";
 
 const AdminPage = ({
   DATABASE_ID,
   INFOBLOCK_COLLECTION_ID,
   FEATURES_COLLECTION_ID,
+  PUBLIC_NAVBARFOOTER_COLLECTION_ID,
+  PUBLIC_NAVBARFOOTER_DOCUMENT_ID,
   BUCKET_ID,
 }) => {
   const [blocks, setBlocks] = useState([]);
@@ -56,12 +62,13 @@ const AdminPage = ({
     id: null,
   });
 
-  const [navbarFooterForm, setNavBarFooterForm] = useState({
+  const [navbarFooterForm, setNavbarFooterForm] = useState({
     navbarLogoUrl: "",
-    navbarAltText: "",
+    navbarLogoFileId: "",
+    navbarLogoAlt: "",
+    navbarMainText: "",
+    navbarSecondaryText: "",
     footerText: "",
-    imageSrc: "",
-    imageFileId: null,
   });
 
   const [showLink1, setShowLink1] = useState(false);
@@ -75,7 +82,19 @@ const AdminPage = ({
       FEATURES_COLLECTION_ID,
       setBlocks,
     );
-  }, [DATABASE_ID, INFOBLOCK_COLLECTION_ID, FEATURES_COLLECTION_ID]);
+    fetchNavbarFooterConfig(
+      DATABASE_ID,
+      PUBLIC_NAVBARFOOTER_COLLECTION_ID,
+      PUBLIC_NAVBARFOOTER_DOCUMENT_ID,
+      setNavbarFooterForm,
+    );
+  }, [
+    DATABASE_ID,
+    INFOBLOCK_COLLECTION_ID,
+    FEATURES_COLLECTION_ID,
+    PUBLIC_NAVBARFOOTER_COLLECTION_ID,
+    PUBLIC_NAVBARFOOTER_DOCUMENT_ID,
+  ]);
 
   const handleSaveInfoBlockForm = (e) => {
     handleSaveInfoBlock(
@@ -99,13 +118,17 @@ const AdminPage = ({
     );
   };
 
-  const handleSaveNavBarFooterForm = async (e) => {
+  const handleSaveNavbarFooterForm = async (e) => {
     e.preventDefault();
-    // Implementar la lógica de guardado para navbar y footer
-    console.log("NavBarFooterForm data:", navbarFooterForm);
+    await saveNavbarFooterConfig(
+      DATABASE_ID,
+      PUBLIC_NAVBARFOOTER_COLLECTION_ID,
+      PUBLIC_NAVBARFOOTER_DOCUMENT_ID,
+      navbarFooterForm,
+    );
   };
 
-  const handleFileChange = async (e, setForm) => {
+  const handleFileChangeInfoBlock = async (e, setForm) => {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -116,6 +139,23 @@ const AdminPage = ({
         ...prevForm,
         imageSrc: fileUrl,
         imageFileId: response.$id,
+      }));
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
+  };
+
+  const handleFileChangeNavbarFooter = async (e, setForm) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      const response = await storage.createFile(BUCKET_ID, ID.unique(), file);
+      const fileUrl = storage.getFileDownload(BUCKET_ID, response.$id);
+      setForm((prevForm) => ({
+        ...prevForm,
+        navbarLogoUrl: fileUrl,
+        navbarLogoFileId: response.$id,
       }));
     } catch (error) {
       console.error("Error uploading file:", error);
@@ -137,12 +177,12 @@ const AdminPage = ({
     switch (selectedForm) {
       case "navbarFooter":
         return (
-          <NavBarFooterFormContainer
+          <NavbarFooterForm
             form={navbarFooterForm}
-            setForm={setNavBarFooterForm}
+            setForm={setNavbarFooterForm}
             handleInputChange={handleInputChange}
-            handleSave={handleSaveNavBarFooterForm}
-            handleFileChange={handleFileChange}
+            handleSave={handleSaveNavbarFooterForm}
+            handleFileChange={handleFileChangeNavbarFooter}
           />
         );
       case "infoBlocks":
@@ -156,7 +196,9 @@ const AdminPage = ({
             showLink2={showLink2}
             setShowLink1={setShowLink1}
             setShowLink2={setShowLink2}
-            handleFileChange={handleFileChange}
+            handleFileChange={(e) =>
+              handleFileChangeInfoBlock(e, setInfoBlockForm)
+            }
             handleImageSizeChange={handleImageSizeChange}
             handleImageStyleChange={handleImageStyleChange}
           />
