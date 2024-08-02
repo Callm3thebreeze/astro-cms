@@ -1,4 +1,5 @@
-- desarrollar panel de control del navbar y el footer
+- hacer responsive el formulario del navbar
+- Plantear división en subpáginas del panel de control los apartados del menu lateral
 - desarrollar panel de control del bloque de logos
 - desarrollar panel de control del cta
 - idear un sistema de reorganización de bloques por drag & drop
