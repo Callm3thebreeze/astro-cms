@@ -42,15 +42,66 @@ export const saveNavbarFooterConfig = async (
 ) => {
   const filteredData = filterFormData(configData);
 
+  const navbarData = {
+    logoUrl: filteredData.logoUrl,
+    logoAlt: filteredData.logoAlt,
+    mainText: filteredData.mainText,
+    secondaryText: filteredData.secondaryText,
+  };
+
+  const footerData = {
+    footerText: filteredData.footerText,
+  };
+
   try {
-    const response = await databases.updateDocument(
+    await databases.updateDocument(
       DATABASE_ID,
       COLLECTION_ID,
       DOCUMENT_ID,
       filteredData,
     );
-    console.log("Navbar and footer config saved:", response);
+
+    await saveNavbarContentToFile(navbarData);
+    await saveFooterContentToFile(footerData);
+
+    console.log("Navbar and footer config saved");
   } catch (error) {
     console.error("Error saving navbar and footer config:", error);
+  }
+};
+
+const saveNavbarContentToFile = async (navbarData) => {
+  try {
+    const response = await fetch("/api/saveNavbarFooterContent", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ type: "navbar", data: navbarData }),
+    });
+    if (!response.ok) {
+      throw new Error("Error saving navbar content");
+    }
+    console.log("Navbar content saved successfully");
+  } catch (error) {
+    console.error("Error saving navbar content:", error);
+  }
+};
+
+const saveFooterContentToFile = async (footerData) => {
+  try {
+    const response = await fetch("/api/saveNavbarFooterContent", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ type: "footer", data: footerData }),
+    });
+    if (!response.ok) {
+      throw new Error("Error saving footer content");
+    }
+    console.log("Footer content saved successfully");
+  } catch (error) {
+    console.error("Error saving footer content:", error);
   }
 };

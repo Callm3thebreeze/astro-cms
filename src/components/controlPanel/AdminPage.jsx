@@ -128,7 +128,7 @@ const AdminPage = ({
     );
   };
 
-  const handleFileChangeInfoBlock = async (e, setForm) => {
+  const handleFileChange = async (e, setForm, field) => {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -137,25 +137,8 @@ const AdminPage = ({
       const fileUrl = storage.getFileDownload(BUCKET_ID, response.$id);
       setForm((prevForm) => ({
         ...prevForm,
-        imageSrc: fileUrl,
+        [field]: fileUrl,
         imageFileId: response.$id,
-      }));
-    } catch (error) {
-      console.error("Error uploading file:", error);
-    }
-  };
-
-  const handleFileChangeNavbarFooter = async (e, setForm) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    try {
-      const response = await storage.createFile(BUCKET_ID, ID.unique(), file);
-      const fileUrl = storage.getFileDownload(BUCKET_ID, response.$id);
-      setForm((prevForm) => ({
-        ...prevForm,
-        navbarLogoUrl: fileUrl,
-        navbarLogoFileId: response.$id,
       }));
     } catch (error) {
       console.error("Error uploading file:", error);
@@ -182,7 +165,7 @@ const AdminPage = ({
             setForm={setNavbarFooterForm}
             handleInputChange={handleInputChange}
             handleSave={handleSaveNavbarFooterForm}
-            handleFileChange={handleFileChangeNavbarFooter}
+            handleFileChange={handleFileChange}
           />
         );
       case "infoBlocks":
@@ -196,9 +179,7 @@ const AdminPage = ({
             showLink2={showLink2}
             setShowLink1={setShowLink1}
             setShowLink2={setShowLink2}
-            handleFileChange={(e) =>
-              handleFileChangeInfoBlock(e, setInfoBlockForm)
-            }
+            handleFileChange={handleFileChange}
             handleImageSizeChange={handleImageSizeChange}
             handleImageStyleChange={handleImageStyleChange}
           />
