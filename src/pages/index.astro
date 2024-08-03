@@ -4,9 +4,10 @@ import Features from "@components/features.astro";
 import Layout from "../layouts/Layout.astro";
 import Infoblock from "@components/infoblock.astro";
 import Cta from "@components/cta.astro";
-import Logos from "@components/logos.astro";
+import IconsBlock from "@components/iconsBlock.astro";
 import { head, blocks } from "@content/infoBlocks.js";
 import { features } from "@content/features.js";
+import { iconsBlock } from "@content/iconsBlock.js";
 ---
 
 <Layout title="Astro CMS">
@@ -14,7 +15,7 @@ import { features } from "@content/features.js";
     <Infoblock content={head} />
     {features.map((item, index) => <Features content={item} key={index} />)}
     {blocks.map((block, index) => <Infoblock content={block} key={index} />)}
-    <Logos />
+    <IconsBlock content={iconsBlock} />
     <Cta />
   </Container>
 </Layout>

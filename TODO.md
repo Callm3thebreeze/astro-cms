@@ -1,7 +1,7 @@
-- hacer responsive el formulario del navbar
-- Plantear división en subpáginas del panel de control los apartados del menu lateral
+- Plantear división en subpáginas del panel de control los apartados del menu lateral (?)
 - desarrollar panel de control del bloque de logos
 - desarrollar panel de control del cta
+- crear pagina de inicio al panel de control con enlace a las instrucciones
 - idear un sistema de reorganización de bloques por drag & drop
 - Evitar refresco de página al editar bloques desde el panel de control
 - Replicar al apariencia del componente en la apariencia de los elementos creados en el panel de control

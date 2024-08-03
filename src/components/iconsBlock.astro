@@ -1,0 +1,34 @@
+---
+// @ts-ignore
+
+import { Icon } from "astro-icon/components";
+const { content } = Astro.props;
+---
+
+{
+  content && (
+    <div class="mt-24">
+      <h2 class="text-center text-slate-500">{content.text}</h2>
+      <div class="flex gap-8 md:gap-20 items-center justify-center mt-10 flex-wrap">
+        {content.icons.map((icon) =>
+          icon.name ? (
+            icon.isAnchor ? (
+              <a href="#" key={icon.name}>
+                <Icon
+                  class="size-8 md:size-12"
+                  name={`simple-icons:${icon.name}`}
+                />
+              </a>
+            ) : (
+              <Icon
+                class="size-8 md:size-12"
+                name={`simple-icons:${icon.name}`}
+                key={icon.name}
+              />
+            )
+          ) : null
+        )}
+      </div>
+    </div>
+  )
+}
