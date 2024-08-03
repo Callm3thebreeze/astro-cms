@@ -1,0 +1,26 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/container.astro";
+import ControlPanelLayout from "@layouts/controlPanelLayout.astro";
+import NavbarFooterFormContainer from "@components/controlPanel/navBarFooterForm/NavBarFooterFormContainer";
+const DATABASE_ID = import.meta.env.PUBLIC_DATABASE_ID;
+const PUBLIC_NAVBARFOOTER_COLLECTION_ID = import.meta.env
+  .PUBLIC_NAVBARFOOTER_COLLECTION_ID;
+const PUBLIC_NAVBARFOOTER_DOCUMENT_ID = import.meta.env
+  .PUBLIC_NAVBARFOOTER_DOCUMENT_ID;
+const BUCKET_ID = import.meta.env.PUBLIC_BUCKET_ID;
+---
+
+<Layout title="">
+  <Container>
+    <ControlPanelLayout>
+      <!-- <NavbarFooterFormContainer
+    DATABASE_ID={DATABASE_ID}
+    PUBLIC_NAVBARFOOTER_COLLECTION_ID={PUBLIC_NAVBARFOOTER_COLLECTION_ID}
+    PUBLIC_NAVBARFOOTER_DOCUMENT_ID={PUBLIC_NAVBARFOOTER_DOCUMENT_ID}
+    BUCKET_ID={BUCKET_ID}
+  /> -->
+      navBarFooter
+    </ControlPanelLayout>
+  </Container>
+</Layout>

@@ -1,0 +1,22 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/container.astro";
+import ControlPanelLayout from "@layouts/controlPanelLayout.astro";
+import InfoBlocksFormContainer from "@components/controlPanel/infoBlockForm/InfoBlocksFormContainer";
+const DATABASE_ID = import.meta.env.PUBLIC_DATABASE_ID;
+const INFOBLOCK_COLLECTION_ID = import.meta.env.PUBLIC_INFOBLOCK_COLLECTION_ID;
+const BUCKET_ID = import.meta.env.PUBLIC_BUCKET_ID;
+---
+
+<Layout title="">
+  <Container>
+    <ControlPanelLayout>
+      <!-- <InfoBlocksFormContainer
+    DATABASE_ID={DATABASE_ID}
+    INFOBLOCK_COLLECTION_ID={INFOBLOCK_COLLECTION_ID}
+    BUCKET_ID={BUCKET_ID}
+  /> -->
+      InfoBlock component
+    </ControlPanelLayout>
+  </Container>
+</Layout>

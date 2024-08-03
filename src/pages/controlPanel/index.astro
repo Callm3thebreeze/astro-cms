@@ -1,0 +1,16 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/container.astro";
+import ControlPanelLayout from "@layouts/controlPanelLayout.astro";
+---
+
+<Layout title="Astro CMS">
+  <Container className="mt-5">
+    <ControlPanelLayout>
+      <h1 class="text-2xl font-bold mb-6">Bienvenido al Panel de Control</h1>
+      <p>
+        Selecciona una sección del menú para empezar a gestionar el contenido.
+      </p>
+    </ControlPanelLayout>
+  </Container>
+</Layout>
