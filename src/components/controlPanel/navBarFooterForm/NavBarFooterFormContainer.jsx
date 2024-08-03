@@ -1,5 +1,3 @@
-import React from "react";
-
 const NavbarFooterForm = ({
   form,
   setForm,
@@ -12,13 +10,13 @@ const NavbarFooterForm = ({
   };
 
   return (
-    <div className="space-y-4 md:col-span-1 bg-gray-100 rounded-md p-4">
+    <div className="space-y-4 col-span-1 bg-gray-100 rounded-md p-4">
       <form onSubmit={handleSave}>
         <div className="flex flex-col space-y-4">
           <h2 className="text-xl font-bold mb-4">Navbar Settings</h2>
 
-          <div className="flex flex-row space-x-4">
-            <div className="flex flex-col w-1/2 space-y-4">
+          <div className="flex flex-col md:flex-row gap-5">
+            <div className="flex flex-col md:w-1/2 space-y-4">
               <div>
                 <label
                   htmlFor="logoUrl"
@@ -56,7 +54,7 @@ const NavbarFooterForm = ({
                 />
               </div>
             </div>
-            <div className="flex flex-col w-1/2 space-y-4">
+            <div className="flex flex-col md:w-1/2 space-y-4">
               <div>
                 <label
                   htmlFor="logoAlt"
