@@ -72,9 +72,10 @@ const AdminPage = ({
     footerText: "",
   });
 
-  const [iconsBlockForm, seticonsBlockForm] = useState({
+  const [iconsBlockForm, setIconsBlockForm] = useState({
     text: "",
-    icons: [{ name: "", isAnchor: false }],
+    icons: [{ isAnchor: false, name: "" }],
+    id: null,
   });
 
   const [showLink1, setShowLink1] = useState(false);
@@ -134,6 +135,25 @@ const AdminPage = ({
     );
   };
 
+  const handleSaveIconsBlockForm = (e) => {
+    e.preventDefault();
+    setBlocks((prevBlocks) => {
+      const existingIndex = prevBlocks.findIndex(
+        (block) => block.id === iconsBlockForm.id,
+      );
+      if (existingIndex !== -1) {
+        const updatedBlocks = [...prevBlocks];
+        updatedBlocks[existingIndex] = { ...iconsBlockForm, type: "icons" };
+        return updatedBlocks;
+      }
+      return [
+        ...prevBlocks,
+        { ...iconsBlockForm, id: Date.now(), type: "icons" },
+      ];
+    });
+    setIconsBlockForm({ text: "", icons: [{ isAnchor: false, name: "" }] });
+  };
+
   const handleFileChange = async (e, setForm, field) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -156,6 +176,9 @@ const AdminPage = ({
     if (block.type === "features") {
       setSelectedForm("features");
       handleEditFeature(index, blocks, setFeaturesForm);
+    } else if (block.type === "icons") {
+      setSelectedForm("icons");
+      setIconsBlockForm(block);
     } else {
       setSelectedForm("infoBlocks");
       handleEditInfoBlock(index, blocks, setInfoBlockForm);
@@ -203,8 +226,9 @@ const AdminPage = ({
         return (
           <IconsBlockFormContainer
             form={iconsBlockForm}
-            setForm={seticonsBlockForm}
+            setForm={setIconsBlockForm}
             handleInputChange={handleInputChange}
+            handleSave={handleSaveIconsBlockForm}
           />
         );
       default:
@@ -278,6 +302,10 @@ const AdminPage = ({
                 DATABASE_ID,
                 FEATURES_COLLECTION_ID,
                 BUCKET_ID,
+              );
+            } else if (block.type === "icons") {
+              setBlocks((prevBlocks) =>
+                prevBlocks.filter((_, i) => i !== index),
               );
             } else {
               handleDelete(

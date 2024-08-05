@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-
-const IconsFormContainer = ({
+const iconsBlockFormContainer = ({
   form,
   setForm,
   handleInputChange,
@@ -119,4 +117,4 @@ const IconsFormContainer = ({
   );
 };
 
-export default IconsFormContainer;
+export default iconsBlockFormContainer;
