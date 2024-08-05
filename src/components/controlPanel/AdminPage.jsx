@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import InfoBlocksFormContainer from "./infoBlockForm/InfoBlocksFormContainer";
 import FeaturesFormContainer from "./featuresForm/FeaturesFormContainer";
 import NavbarFooterForm from "./navBarFooterForm/NavBarFooterFormContainer";
+import IconsBlockFormContainer from "./iconsBlockForm/IconsBlockFormContainer";
 import BlockList from "./BlockList";
 import {
   handleInputChange,
@@ -69,6 +70,11 @@ const AdminPage = ({
     navbarMainText: "",
     navbarSecondaryText: "",
     footerText: "",
+  });
+
+  const [iconsBlockForm, seticonsBlockForm] = useState({
+    text: "",
+    icons: [{ name: "", isAnchor: false }],
   });
 
   const [showLink1, setShowLink1] = useState(false);
@@ -193,6 +199,14 @@ const AdminPage = ({
             handleSave={handleSaveFeaturesForm}
           />
         );
+      case "icons":
+        return (
+          <IconsBlockFormContainer
+            form={iconsBlockForm}
+            setForm={seticonsBlockForm}
+            handleInputChange={handleInputChange}
+          />
+        );
       default:
         return null;
     }
@@ -233,6 +247,17 @@ const AdminPage = ({
                   : "bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
               }`}>
               Features
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => setSelectedForm("icons")}
+              className={`inline-flex items-center px-4 py-3 w-full rounded-lg ${
+                selectedForm === "icons"
+                  ? "bg-blue-700 text-white dark:bg-blue-600"
+                  : "bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
+              }`}>
+              Icons
             </button>
           </li>
         </ul>
