@@ -7,10 +7,12 @@ const IconsFormContainer = ({
   handleSave,
 }) => {
   const handleAddIcon = () => {
-    setForm((prevForm) => ({
-      ...prevForm,
-      icons: [...prevForm.icons, { isAnchor: false, name: "" }],
-    }));
+    if (form.icons.length < 6) {
+      setForm((prevForm) => ({
+        ...prevForm,
+        icons: [...prevForm.icons, { isAnchor: false, name: "" }],
+      }));
+    }
   };
 
   const handleRemoveIcon = (index) => {
@@ -83,12 +85,15 @@ const IconsFormContainer = ({
                     className="mt-1"
                   />
                   <div className="flex space-x-2 mt-4">
-                    <button
-                      type="button"
-                      onClick={handleAddIcon}
-                      className="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                      Add Icon
-                    </button>
+                    {index === form.icons.length - 1 &&
+                      form.icons.length < 6 && (
+                        <button
+                          type="button"
+                          onClick={handleAddIcon}
+                          className="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                          Add Icon
+                        </button>
+                      )}
                     <button
                       type="button"
                       onClick={() => handleRemoveIcon(index)}
