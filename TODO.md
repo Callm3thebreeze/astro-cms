@@ -1,4 +1,6 @@
-- Plantear división en subpáginas del panel de control los apartados del menu lateral (?)
+-Buscar problema actualización imágenes de infoblocks
+-erradicar refresco de página
+
 - desarrollar panel de control del bloque de logos
 - desarrollar panel de control del cta
 - crear pagina de inicio al panel de control con enlace a las instrucciones
