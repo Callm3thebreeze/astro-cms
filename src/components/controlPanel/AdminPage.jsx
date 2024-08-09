@@ -24,6 +24,10 @@ import {
   saveNavbarFooterConfig,
 } from "@utils/dbHandlers/navbarFooterHandlers";
 import { storage, ID } from "@lib/appwrite";
+import {
+  saveIconsBlock,
+  handleEditIconsBlock,
+} from "@utils/dbHandlers/iconsBlockHandlers";
 
 const AdminPage = ({
   DATABASE_ID,
@@ -31,6 +35,7 @@ const AdminPage = ({
   FEATURES_COLLECTION_ID,
   PUBLIC_NAVBARFOOTER_COLLECTION_ID,
   PUBLIC_NAVBARFOOTER_DOCUMENT_ID,
+  ICONSBLOCK_COLLECTION_ID,
   BUCKET_ID,
 }) => {
   const [blocks, setBlocks] = useState([]);
@@ -87,6 +92,7 @@ const AdminPage = ({
       DATABASE_ID,
       INFOBLOCK_COLLECTION_ID,
       FEATURES_COLLECTION_ID,
+      ICONSBLOCK_COLLECTION_ID,
       setBlocks,
     );
     fetchNavbarFooterConfig(
@@ -99,6 +105,7 @@ const AdminPage = ({
     DATABASE_ID,
     INFOBLOCK_COLLECTION_ID,
     FEATURES_COLLECTION_ID,
+    ICONSBLOCK_COLLECTION_ID,
     PUBLIC_NAVBARFOOTER_COLLECTION_ID,
     PUBLIC_NAVBARFOOTER_DOCUMENT_ID,
   ]);
@@ -137,23 +144,18 @@ const AdminPage = ({
 
   const handleSaveIconsBlockForm = (e) => {
     e.preventDefault();
-    setBlocks((prevBlocks) => {
-      const existingIndex = prevBlocks.findIndex(
-        (block) => block.id === iconsBlockForm.id,
-      );
-      if (existingIndex !== -1) {
-        const updatedBlocks = [...prevBlocks];
-        updatedBlocks[existingIndex] = { ...iconsBlockForm, type: "icons" };
-        return updatedBlocks;
-      }
-      return [
-        ...prevBlocks,
-        { ...iconsBlockForm, id: Date.now(), type: "icons" },
-      ];
-    });
-    setIconsBlockForm({ text: "", icons: [{ isAnchor: false, name: "" }] });
+    saveIconsBlock(
+      e,
+      iconsBlockForm,
+      setIconsBlockForm,
+      setBlocks,
+      DATABASE_ID,
+      ICONSBLOCK_COLLECTION_ID,
+    );
   };
 
+  console.log("featuresForm", featuresForm);
+  console.log("iconsBlockForm", iconsBlockForm);
   const handleFileChange = async (e, setForm, field) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -178,11 +180,43 @@ const AdminPage = ({
       handleEditFeature(index, blocks, setFeaturesForm);
     } else if (block.type === "icons") {
       setSelectedForm("icons");
-      setIconsBlockForm(block);
+      handleEditIconsBlock(index, blocks, setIconsBlockForm);
     } else {
       setSelectedForm("infoBlocks");
       handleEditInfoBlock(index, blocks, setInfoBlockForm);
     }
+  };
+
+  const handleDeleteBlock = async (index) => {
+    const block = blocks[index];
+    if (block.type === "features") {
+      handleDelete(
+        index,
+        blocks,
+        setBlocks,
+        DATABASE_ID,
+        FEATURES_COLLECTION_ID,
+        BUCKET_ID,
+      );
+    } else if (block.type === "icons") {
+      handleDelete(
+        index,
+        blocks,
+        setBlocks,
+        DATABASE_ID,
+        ICONSBLOCK_COLLECTION_ID,
+      );
+    } else if (block.type === "infoBlock") {
+      handleDelete(
+        index,
+        blocks,
+        setBlocks,
+        DATABASE_ID,
+        INFOBLOCK_COLLECTION_ID,
+        BUCKET_ID,
+      );
+    }
+    console.log(blocks);
   };
 
   const renderForm = () => {
@@ -292,32 +326,7 @@ const AdminPage = ({
         <BlockList
           blocks={blocks}
           handleEdit={handleEdit}
-          handleDelete={(index) => {
-            const block = blocks[index];
-            if (block.type === "features") {
-              handleDelete(
-                index,
-                blocks,
-                setBlocks,
-                DATABASE_ID,
-                FEATURES_COLLECTION_ID,
-                BUCKET_ID,
-              );
-            } else if (block.type === "icons") {
-              setBlocks((prevBlocks) =>
-                prevBlocks.filter((_, i) => i !== index),
-              );
-            } else {
-              handleDelete(
-                index,
-                blocks,
-                setBlocks,
-                DATABASE_ID,
-                INFOBLOCK_COLLECTION_ID,
-                BUCKET_ID,
-              );
-            }
-          }}
+          handleDelete={handleDeleteBlock}
         />
       </section>
     </main>

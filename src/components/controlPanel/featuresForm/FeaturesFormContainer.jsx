@@ -6,6 +6,7 @@ const FeaturesFormContainer = ({
   handleInputChange,
   handleSave,
 }) => {
+  console.log(form);
   const [items, setItems] = useState([
     { title: "", description: "", icon: "" },
   ]);

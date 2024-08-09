@@ -1,4 +1,4 @@
-import profileImage from "assets/profile-pic.jpeg";
+import profileImage from "assets/profile-pic.jpg";
 import skateImage from "assets/skate.jpg";
 import pokemonImage from "assets/pokemon.jpg";
 

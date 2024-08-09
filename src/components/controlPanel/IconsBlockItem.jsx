@@ -1,14 +1,39 @@
-import React from "react";
-
 const IconsBlockItem = ({ block, handleEdit, handleDelete }) => {
+  // Desestructura los datos del bloque para obtener los íconos y otras propiedades
+  const {
+    text,
+    icon1,
+    isAnchor1,
+    icon2,
+    isAnchor2,
+    icon3,
+    isAnchor3,
+    icon4,
+    isAnchor4,
+    icon5,
+    isAnchor5,
+    icon6,
+    isAnchor6,
+  } = block;
+
+  // Crea un array de íconos basado en el objeto
+  const icons = [
+    { name: icon1, isAnchor: isAnchor1 },
+    { name: icon2, isAnchor: isAnchor2 },
+    { name: icon3, isAnchor: isAnchor3 },
+    { name: icon4, isAnchor: isAnchor4 },
+    { name: icon5, isAnchor: isAnchor5 },
+    { name: icon6, isAnchor: isAnchor6 },
+  ].filter((icon) => icon.name); // Filtra íconos vacíos
+
   return (
     <div className="mb-6 p-4 border border-gray-200 rounded-md shadow-sm">
       <div className="flex justify-between items-end">
         <div>
           <h3 className="text-lg font-semibold mb-2">Icons Block</h3>
-          <p className="text-sm text-gray-600">{block.text}</p>
+          <p className="text-sm text-gray-600">{text}</p>
           <div className="flex flex-wrap gap-2 mt-2">
-            {block.icons.map((icon, index) => (
+            {icons.map((icon, index) => (
               <div key={index} className="flex items-center w-1/3">
                 {icon.isAnchor ? (
                   <a href="#">

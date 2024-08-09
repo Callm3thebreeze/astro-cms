@@ -49,14 +49,14 @@ const iconsBlockFormContainer = ({
               {form.icons.map((icon, index) => (
                 <div key={index} className="border p-4 rounded-md mb-4">
                   <label
-                    htmlFor={`icon-name-${index}`}
+                    htmlFor={`icon${index + 1}`}
                     className="block text-sm font-medium text-gray-700">
                     Icon Name
                   </label>
                   <input
                     type="text"
-                    name={`icon-name-${index}`}
-                    id={`icon-name-${index}`}
+                    name={`icon${index + 1}`}
+                    id={`icon${index + 1}`}
                     value={icon.name}
                     onChange={(e) => {
                       const newIcons = [...form.icons];
@@ -66,13 +66,13 @@ const iconsBlockFormContainer = ({
                     className="mt-3 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
                   <label
-                    htmlFor={`icon-anchor-${index}`}
+                    htmlFor={`isAnchor${index + 1}`}
                     className="block text-sm font-medium text-gray-700 mt-2">
                     Is Anchor
                   </label>
                   <input
                     type="checkbox"
-                    name={`icon-anchor-${index}`}
+                    name={`isAnchor${index + 1}`}
                     id={`icon-anchor-${index}`}
                     checked={icon.isAnchor}
                     onChange={(e) => {

@@ -90,7 +90,6 @@ export const handleSaveFeatures = async (
 export const handleEditFeature = (index, blocks, setFeaturesForm) => {
   const block = blocks[index];
   console.log(`Editing feature document with ID: ${block.id}`);
-
   setFeaturesForm({
     featureTitle: block.title,
     featureSubtitle: block.subtitle,
